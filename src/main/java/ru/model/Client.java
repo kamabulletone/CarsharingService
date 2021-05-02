@@ -2,6 +2,8 @@ package ru.model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,11 +19,14 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-@Table(name = "Clients", schema = "carsharing")
+@Table(name = "clients", schema = "carsharing")
+@JsonIgnoreProperties(ignoreUnknown = true,
+        value = {"hibernateLazyInitializer", "handler", "created", "FullName"})
 public class Client {
 
     @Id
-    @Column(name = "client_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "client_id",updatable = false, nullable = false)
     public int clientID;
 
     @Column(name = "full_name")
@@ -43,6 +48,7 @@ public class Client {
     public String email;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "client")
+    @JsonBackReference
     private Order order;
 
 

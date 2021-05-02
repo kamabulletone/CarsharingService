@@ -25,6 +25,11 @@ public class CarService {
         return reps.findAll();
     }
 
+    public Car getCar(int id) {
+       // System.out.println(id.getClass().getName());
+        return reps.findById(id).get();
+    }
+
 //    public List<Car> orderByName() {
 //        log.info("Find all items order by name");
 //        return reps.findAll(Sort.by("name"));

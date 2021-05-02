@@ -2,6 +2,8 @@ package ru.model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +20,9 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-@Table(name = "Cars", schema = "carsharing")
+@JsonIgnoreProperties(ignoreUnknown = true,
+        value = {"hibernateLazyInitializer", "handler", "created"})
+@Table(name = "cars", schema = "carsharing")
 //@IdClass(CarPk.class)
 public class Car implements Serializable {
 
@@ -40,12 +44,10 @@ public class Car implements Serializable {
     @Column(name = "car_status")
     private String carStatus;
 
+    @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "car")
     private Order order;
 
-//    @Fetch(FetchMode.JOIN)
-//    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
-//    private List<Order> orders;
 
 
 

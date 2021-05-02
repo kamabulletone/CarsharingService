@@ -10,8 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.model.Car;
 import ru.model.Order;
+import ru.model.OrderDto;
 import ru.model.User;
 import ru.services.CarService;
+import ru.services.MapService;
 import ru.services.OrderService;
 import ru.services.UserService;
 
@@ -32,6 +34,9 @@ public class MyController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MapService mapService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
@@ -61,11 +66,24 @@ public class MyController {
         carService.insertCar(w);
     }
 
+    @RequestMapping(value = "/map", method = RequestMethod.GET)
+    public ResponseEntity<List<OrderDto>> getAllOrders() {
+        return new ResponseEntity<List<OrderDto>> (mapService.getAllOrders(), HttpStatus.OK);
+    }
+
+//    @RequestMapping(value = "/home/createorder", method = RequestMethod.POST)
+//    @ResponseBody
+//    public void createOrder(@RequestBody Order w) {
+//
+//        orderService.insertOrder(w);
+//    }
+
     @RequestMapping(value = "/home/createorder", method = RequestMethod.POST)
     @ResponseBody
-    public void createOrder(@RequestBody Order w) {
-
-        orderService.insertOrder(w);
+    public void createOrder(@RequestBody OrderDto orderDto) {
+        System.out.println(orderDto.toString());
+        Order order = mapService.convertToOrder(orderDto);
+        orderService.insertOrder(order);
     }
 
     @RequestMapping(value = "/home/deleteitem", method = RequestMethod.POST)

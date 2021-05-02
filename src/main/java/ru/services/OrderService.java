@@ -2,11 +2,14 @@ package ru.services;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.model.Car;
 import ru.model.Order;
+import ru.model.OrderStatus;
 import ru.repositories.OrderRepository;
+import ru.repositories.OrderStatusRepository;
 
 
 import javax.transaction.Transactional;
@@ -18,9 +21,15 @@ import java.util.List;
 public class OrderService {
 
     private  OrderRepository reps;
+    @Autowired
+    private OrderStatusRepository statReps;
 
     public OrderService(OrderRepository reps) {
         this.reps = reps;
+    }
+
+    public OrderStatus getOrderStatus(int id) {
+        return statReps.findById(id).get();
     }
 
     public List<Order> getOrders() {
