@@ -20,32 +20,32 @@ public class CarService {
         this.reps = reps;
     }
 
-    public List<Car> getItems() {
+    public List<Car> getCars() {
         log.info("Find all items");
         return reps.findAll();
     }
 
-    public List<Car> orderByName() {
-        log.info("Find all items order by name");
-        return reps.findAll(Sort.by("name"));
-    }
+//    public List<Car> orderByName() {
+//        log.info("Find all items order by name");
+//        return reps.findAll(Sort.by("name"));
+//    }
+//
+//    public List<Car> orderByDate() {
+//        log.info("Find all items order by creationDate");
+//        return reps.findAll(Sort.by("creationDate"));
+//    }
+//
+//    public List<Car> orderByPrice() {
+//        log.info("Find all items order by price");
+//        return reps.findAll(Sort.by("price"));
+//    }
 
-    public List<Car> orderByDate() {
-        log.info("Find all items order by creationDate");
-        return reps.findAll(Sort.by("creationDate"));
-    }
-
-    public List<Car> orderByPrice() {
-        log.info("Find all items order by price");
-        return reps.findAll(Sort.by("price"));
-    }
-
-    public void insertItem(Car a) {
+    public void insertCar(Car a) {
         log.info("Save item {}", a);
         reps.save(a);
     }
 
-    public void deleteItem(Car a) {
+    public void deleteCar(Car a) {
         log.info("Delete item {}", a);
         reps.delete(a);
     }

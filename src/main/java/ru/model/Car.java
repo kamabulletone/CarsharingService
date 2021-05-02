@@ -2,74 +2,51 @@ package ru.model;
 
 
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "items")
-public class Car {
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@Table(name = "Cars", schema = "carsharing")
+//@IdClass(CarPk.class)
+public class Car implements Serializable {
+
     @Id
-    @Column(name = "name")
-    public String name;
-    @Column(name = "creationdate")
-    public String creationDate;
-    @Column(name = "price")
-    public int price;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "car_id", updatable = false, nullable = false)
+    private int carId;
 
-    @Fetch(FetchMode.JOIN)
-    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
-    private List<Order> orders;
+    //@Id
+    @Column(name = "car_registr_num", unique = true, updatable = false)
+    private String carRegistrationNumber;
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
+    @Column(name = "car_mark")
+    private String carMark;
 
-    public List<Order> getOrders() {
-        return orders;
-    }
+    @Column(name = "car_model")
+    private String carModel;
 
-    public Car() { }
+    @Column(name = "car_status")
+    private String carStatus;
 
-    public Car(String name, String creationDate, int price) {
-        this.name = name;
-        this.creationDate = creationDate;
-        this.price = price;
-    }
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "car")
+    private Order order;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+//    @Fetch(FetchMode.JOIN)
+//    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+//    private List<Order> orders;
 
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
-    }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getCreationDate() {
-        return creationDate;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    @Override
-    public String toString() {
-        return "Item{" +
-                "name='" + name + '\'' +
-                ", creationDate='" + creationDate + '\'' +
-                ", price=" + price +
-                ", orders=" + orders.toString() +
-                '}';
-    }
 }

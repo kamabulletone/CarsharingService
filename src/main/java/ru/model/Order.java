@@ -2,61 +2,47 @@ package ru.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.mapping.Join;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "orders1", schema = "public")
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@Table(name = "orders", schema = "carsharing")
 public class Order {
+
     @Id
-    @Column(name = "order_date")
-    private String orderDate;
-    @Column(name = "item_name")
-    private String itemName;
+    @Column(name = "order_id")
+    private int orderId;
 
-    @ManyToOne
-    @JoinColumn(name="item_name", insertable = false, updatable = false)
-    @JsonIgnore
-    public Car car;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id_FK", referencedColumnName = "client_id")
+    private Client client;
 
-    public String getItemName() {
-        return itemName;
-    }
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "car_id_FK", referencedColumnName = "car_id")
+    private Car car;
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_status_FK", referencedColumnName = "id")
+    private OrderStatus orderStatus;
 
 
 
-    public Order() {}
 
-    public Order(String orderDate, String itemName) {
-        this.orderDate = orderDate;
-        this.itemName = itemName;
-    }
 
-    public void setItem(Car car) {
-        this.car = car;
-    }
 
-    public Car getItem() {
-        return car;
-    }
 
-    public String getOrderDate() {
-        return orderDate;
-    }
 
-    public void setOrderDate(String orderDate) {
-        this.orderDate = orderDate;
-    }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "orderDate='" + orderDate + '\'' +
-                ", itemName='" + itemName + '\'' +
-                '}';
-    }
+
+
 }

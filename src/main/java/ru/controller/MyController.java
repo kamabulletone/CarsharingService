@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.model.Car;
 import ru.model.Order;
-import ru.extraservices.EmailService;
 import ru.model.User;
 import ru.services.CarService;
 import ru.services.OrderService;
@@ -23,17 +22,16 @@ import java.util.List;
 @AllArgsConstructor
 public class MyController {
 
-    @Autowired
-    private EmailService m;
+
 
     @Autowired
-    private CarService a;
+    private CarService carService;
 
     @Autowired
-    private OrderService b;
+    private OrderService orderService;
 
     @Autowired
-    private UserService u;
+    private UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
@@ -47,7 +45,7 @@ public class MyController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     String signUp(@ModelAttribute User user) {
-        u.signUpUser(user);
+        userService.signUpUser(user);
         return "redirect:/login";
     }
 
@@ -56,71 +54,71 @@ public class MyController {
         return "test";
     }
 
-    @RequestMapping(value = "/home/createitem", method = RequestMethod.POST)
+    @RequestMapping(value = "/home/createcar", method = RequestMethod.POST)
     @ResponseBody
     public void createItem(@RequestBody Car w) {
-        m.sendEmailItem(w);
-        a.insertItem(w);
+
+        carService.insertCar(w);
     }
 
     @RequestMapping(value = "/home/createorder", method = RequestMethod.POST)
     @ResponseBody
     public void createOrder(@RequestBody Order w) {
-        m.sendEmailOrder(w);
-        b.insertOrder(w);
+
+        orderService.insertOrder(w);
     }
 
     @RequestMapping(value = "/home/deleteitem", method = RequestMethod.POST)
     @ResponseBody
     public void delItem(@RequestBody Car w) {
-        a.deleteItem(w);
+        carService.deleteCar(w);
     }
 
     @RequestMapping(value = "/home/deleteorder", method = RequestMethod.POST)
     @ResponseBody
     public void delOrder(@RequestBody Order w) {
-        b.deleteOrder(w);
+        orderService.deleteOrder(w);
     }
 
-    @RequestMapping(value = "/home/outitem", method = RequestMethod.GET)
+    @RequestMapping(value = "/home/outcar", method = RequestMethod.GET)
     public ResponseEntity<List<Car>> outItem() {
-        return new ResponseEntity<List<Car>> (a.getItems(), HttpStatus.OK);
+        return new ResponseEntity<List<Car>> (carService.getCars(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/home/outorder", method = RequestMethod.GET)
     public ResponseEntity<List<Order>> outOrder() {
-        return new ResponseEntity<List<Order>> (b.getOrders(), HttpStatus.OK);
+        return new ResponseEntity<List<Order>> (orderService.getOrders(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "home/order/{orderDate}/item", method = RequestMethod.GET)
     @ResponseBody
     public Car getOrderItem(@PathVariable("orderDate") String orderDate) {
-        return b.getItemsByOrder(orderDate);
+        return orderService.getCarByOrder(orderDate);
     }
 
-    @RequestMapping(value = "/home/outitem/orderbyname", method = RequestMethod.GET)
-    public ResponseEntity<List<Car>> orderByName() {
-        return new ResponseEntity<List<Car>>(a.orderByName() , HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/home/outitem/orderbydate", method = RequestMethod.GET)
-    public ResponseEntity<List<Car>> orderByDate() {
-        return new ResponseEntity<List<Car>>(a.orderByDate() , HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/home/outitem/orderbyprice", method = RequestMethod.GET)
-    public ResponseEntity<List<Car>> orderByPrice() {
-        return new ResponseEntity<List<Car>>(a.orderByPrice() , HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/home/outorder/orderbydate", method = RequestMethod.GET)
-    public ResponseEntity<List<Order>> orderByOrderDate() {
-        return new ResponseEntity<List<Order>>(b.orderByOrderDate(), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/home/outorder/orderbyname", method = RequestMethod.GET)
-    public ResponseEntity<List<Order>> orderByItemName() {
-        return new ResponseEntity<List<Order>>(b.orderByItemName(), HttpStatus.OK);
-    }
+//    @RequestMapping(value = "/home/outitem/orderbyname", method = RequestMethod.GET)
+//    public ResponseEntity<List<Car>> orderByName() {
+//        return new ResponseEntity<List<Car>>(carService.orderByName() , HttpStatus.OK);
+//    }
+//
+//    @RequestMapping(value = "/home/outitem/orderbydate", method = RequestMethod.GET)
+//    public ResponseEntity<List<Car>> orderByDate() {
+//        return new ResponseEntity<List<Car>>(carService.orderByDate() , HttpStatus.OK);
+//    }
+//
+//    @RequestMapping(value = "/home/outitem/orderbyprice", method = RequestMethod.GET)
+//    public ResponseEntity<List<Car>> orderByPrice() {
+//        return new ResponseEntity<List<Car>>(carService.orderByPrice() , HttpStatus.OK);
+//    }
+//
+//    @RequestMapping(value = "/home/outorder/orderbydate", method = RequestMethod.GET)
+//    public ResponseEntity<List<Order>> orderByOrderDate() {
+//        return new ResponseEntity<List<Order>>(orderService.orderByOrderDate(), HttpStatus.OK);
+//    }
+//
+//    @RequestMapping(value = "/home/outorder/orderbyname", method = RequestMethod.GET)
+//    public ResponseEntity<List<Order>> orderByItemName() {
+//        return new ResponseEntity<List<Order>>(orderService.orderByItemName(), HttpStatus.OK);
+//    }
 
 }
