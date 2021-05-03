@@ -28,9 +28,9 @@ public class OrderStatus {
     @Column(name="description", unique = true)
     private String description;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "orderStatus")
-    @JsonBackReference
-    private Order order;
+//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "orderStatus")
+//    @JsonBackReference
+//    private Order order;
 
 
 

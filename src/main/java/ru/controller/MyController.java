@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.model.Car;
 import ru.model.Order;
@@ -69,6 +70,12 @@ public class MyController {
     @RequestMapping(value = "/map", method = RequestMethod.GET)
     public ResponseEntity<List<OrderDto>> getAllOrders() {
         return new ResponseEntity<List<OrderDto>> (mapService.getAllOrders(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/showcars" , method = RequestMethod.GET)
+    public String showCars(Model model) {
+        model.addAttribute("cars", carService.getCars());
+        return "choose";
     }
 
 //    @RequestMapping(value = "/home/createorder", method = RequestMethod.POST)

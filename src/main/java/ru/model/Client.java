@@ -41,15 +41,15 @@ public class Client {
     @Column(name = "driver_license")
     public String driverLicense; //driverLicenseScanURL
 
-    @Column(name = "phone_num")
+    @Column(name = "phone_num", unique = true)
     public String phoneNumber;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     public String email;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "client")
-    @JsonBackReference
-    private Order order;
+//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.ALL)
+//    @JsonBackReference
+//    private Order order;
 
 
 

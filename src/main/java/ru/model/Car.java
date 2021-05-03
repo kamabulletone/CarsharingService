@@ -44,9 +44,9 @@ public class Car implements Serializable {
     @Column(name = "car_status")
     private String carStatus;
 
-    @JsonBackReference
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "car")
-    private Order order;
+//    @JsonBackReference
+//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "car", cascade = CascadeType.ALL)
+//    private Order order;
 
 
 

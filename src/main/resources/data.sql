@@ -22,15 +22,16 @@ ON DUPLICATE KEY UPDATE description = values(description);
 
 INSERT INTO carsharing.cars(car_registr_num, car_mark, car_model, car_status)
 values ('У037АК', 'Toyota', 'Kamri', 'free'),
-       ('Г228ВП', 'Mercedes', 'Benz', 'free')
+       ('Г228ВП', 'Mercedes', 'Benz', 'free'),
+       ('Ы232ВЕ', 'KIA', 'RIO', 'free')
 ON DUPLICATE KEY UPDATE car_registr_num = values(car_registr_num),
                         car_mark = values(car_mark), car_model=values(car_model),
                         car_status = values(car_status);
 
 
-INSERT INTO carsharing.orders (car_id_fk,client_id_fk,order_status_fk)
- values (1,2,1),
-        (2,1,2),
-        (1,3,3)
+INSERT INTO carsharing.orders (order_id,car_id_fk,client_id_fk,order_status_fk, created_on)
+ values (1,1,1,1, curdate() ),
+        (2,2,1,2, curdate() ),
+        (3,3,3,3, curdate() )
 ON DUPLICATE KEY UPDATE car_id_fk = values(car_id_fk),client_id_fk = values(client_id_fk),
-                        order_status_fk = values(order_status_fk);
+                        order_status_fk = values(order_status_fk), created_on = values(created_on);

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content>
+    <meta name="author" content>
+    <title>Please sign in</title>
+    <meta charset="UTF-8">
+    <title>Choosing page</title>
+</head>
+<body>
+
+    <h1>Data table</h1>
+    <div>
+        <table border="1">
+            <tr>
+                <th>MARK</th>
+                <th>MODEL</th>
+                <th>REG_NUM</th>
+                <th>STATUS</th>
+            </tr>
+            <tr th:each = "car : ${cars}">
+                <td th:text="${car.carMark}"> </td>
+                <td th:text="${car.carModel}"> </td>
+                <td th:text="${car.carRegistrationNumber}"> </td>
+                <td th:text="${car.carStatus}"> </td>
+
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>
