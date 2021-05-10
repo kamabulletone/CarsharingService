@@ -8,14 +8,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ru.services.UserService;
+import ru.services.ClientService;
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UserService userService;
+    private ClientService clientService;
 
     @Autowired
     private BCryptPasswordEncoder encoder;
@@ -23,10 +23,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().disable()
-                .authorizeRequests().anyRequest().permitAll() //antMatchers("/login", "logout", "/registration").permitAll().anyRequest().authenticated()
+                .authorizeRequests().anyRequest().permitAll()//antMatchers("/login", "logout", "/registration").permitAll().anyRequest().authenticated()
                 .and().formLogin()
                 .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/home")
+                .defaultSuccessUrl("/showcars")
                 .permitAll()
                 .and()
                 .logout()
@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(encoder);
+        auth.userDetailsService(clientService).passwordEncoder(encoder);
     }
 
     @Bean

@@ -9,15 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.model.Car;
-import ru.model.Order;
-import ru.model.OrderDto;
-import ru.model.User;
-import ru.services.CarService;
-import ru.services.MapService;
-import ru.services.OrderService;
-import ru.services.UserService;
+import ru.model.*;
+import ru.services.*;
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -33,8 +28,11 @@ public class MyController {
     @Autowired
     private OrderService orderService;
 
+//    @Autowired
+//    private UserService userService;
+
     @Autowired
-    private UserService userService;
+    private ClientService clientService;
 
     @Autowired
     private MapService mapService;
@@ -45,13 +43,20 @@ public class MyController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registration(User user) {
+    public String registration(Model model) {
+        model.addAttribute("client", new Client());
         return "registration";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    String signUp(@ModelAttribute User user) {
-        userService.signUpUser(user);
+    String signUp(@ModelAttribute Client client) {
+        client.setDriverLicense("none");
+        client.setFacePhoto("none");
+
+        System.out.println(client.toString());
+
+        clientService.signUpUser(client);
+
         return "redirect:/login";
     }
 
@@ -73,9 +78,29 @@ public class MyController {
     }
 
     @RequestMapping(value = "/showcars" , method = RequestMethod.GET)
-    public String showCars(Model model) {
+    public String showCars(Model model, Principal principal) {
         model.addAttribute("cars", carService.getCars());
+        System.out.println(principal.getName());
+        model.addAttribute("clientName",principal.getName());
+        Client client = clientService.getClient(principal.getName());
+        System.out.println(client);
+       // OrderDto orderDto = new OrderDto()
+       // createOrder();
         return "choose";
+    }
+
+//    @RequestMapping(value = "/showselectedcar", method = RequestMethod.POST)
+//    public String showCarsSubmit(@ModelAttribute Car car) {
+//        System.out.println(car.toString());
+//        return "redirect:/showcars";
+//    }
+
+    @RequestMapping(value = "/showselectedcar", method = RequestMethod.POST)
+    public String showCarsSubmit(@RequestParam(value = "carId", required = true) int carId) {
+        System.out.println(carId);
+
+        //System.out.println(car.toString());
+        return "redirect:/showcars";
     }
 
 //    @RequestMapping(value = "/home/createorder", method = RequestMethod.POST)

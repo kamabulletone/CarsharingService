@@ -4,49 +4,87 @@ package ru.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
+@ToString
 @Getter
 @Table(name = "clients", schema = "carsharing")
-@JsonIgnoreProperties(ignoreUnknown = true,
-        value = {"hibernateLazyInitializer", "handler", "created", "FullName"})
-public class Client {
+//@JsonIgnoreProperties(ignoreUnknown = true,
+//        value = {"hibernateLazyInitializer", "handler", "created", "FullName"})
+public class Client implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "client_id",updatable = false, nullable = false)
-    public int clientID;
+    @Column(name = "client_id") //,updatable = false, nullable = false)
+    private int clientID;
 
     @Column(name = "full_name")
-    public String FullName;
+    private String fullName;
 
-    @Column(name = "passport")
-    public String passport; //PassportScanURL
+    @Column(name = "passport", unique = true)
+    private String passport; //PassportScanURL
 
     @Column(name = "face_photo")
-    public String facePhoto; //FacePhotoURL
+    private String facePhoto; //FacePhotoURL
 
     @Column(name = "driver_license")
-    public String driverLicense; //driverLicenseScanURL
+    private String driverLicense; //driverLicenseScanURL
 
-    @Column(name = "phone_num", unique = true)
-    public String phoneNumber;
+    @Column(name = "phone_num")
+    private String phoneNumber;
 
     @Column(name = "email", unique = true)
-    public String email;
+    private String email;
 
+    @Column(name = "password")
+    private String password;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 //    @OneToOne(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.ALL)
 //    @JsonBackReference
 //    private Order order;

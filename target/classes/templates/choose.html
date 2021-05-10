@@ -29,5 +29,34 @@
         </table>
     </div>
 
+
+<!--    <select th:field="*{car}">-->
+<!--        <option th:each="i : ${#numbers.sequence(0, 100)}" th:value="${i}" th:text="${i}">-->
+<!--        </option>-->
+<!--    </select>-->
+
+    <form name='f' action="#" th:action="@{/showselectedcar}" method='POST'>
+        <table>
+            <tr>
+                <td>Select car:</td>
+                <td>
+                    <select name="car" id="car" th:name="carId">
+                        <option value=""> -- </option>
+                        <option th:each="car : ${cars}"
+                                th:value="${car.carId}"
+                                th:text="|${car.carMark} ${car.carModel} ${car.carStatus}|">
+
+                        </option>
+                    </select>
+
+                </td>
+            </tr>
+
+            <tr>
+                <td><input name="submit" type="submit" value="Submit" /></td>
+            </tr>
+        </table>
+    </form>
+
 </body>
 </html>

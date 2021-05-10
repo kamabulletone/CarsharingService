@@ -4,10 +4,7 @@ package ru.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -20,11 +17,12 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-@JsonIgnoreProperties(ignoreUnknown = true,
-        value = {"hibernateLazyInitializer", "handler", "created"})
+@ToString
+//@JsonIgnoreProperties(ignoreUnknown = true,
+//        value = {"hibernateLazyInitializer", "handler", "created"})
 @Table(name = "cars", schema = "carsharing")
 //@IdClass(CarPk.class)
-public class Car implements Serializable {
+public class Car{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

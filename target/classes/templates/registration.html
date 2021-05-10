@@ -10,29 +10,53 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script type="text/javascript">
-        function checkPasswordMatch() {
-            var password = $("#password").val();
-            var confirmPassword = $("#passwordConfirm").val();
+    <script >
+
+    $(function() {
+        $("#passwordConfirm").on("keyup", function() { // Выполняем скрипт при изменении содержимого 2-го поля
+
+		var value_input1 = $("#password").val(); // Получаем содержимое 1-го поля
+		var value_input2 = $(this).val(); // Получаем содержимое 2-го поля
 
 
-            if (password != confirmPassword)
-                alert("Password not confirm");
-            else {
-                var form = $("form");
-                form.submit()
-            }
-        }
+
+		if(value_input1 != value_input2) {
+
+			$(".error").html("Пароли не совпадают!"); // Выводим сообщение
+			$("#submit").attr("disabled", "disabled"); // Запрещаем отправку формы
+
+		} else { // Условие, если поля совпадают
+
+			$("#submit").removeAttr("disabled");  // Разрешаем отправку формы
+			$(".error").html(""); // Скрываем сообщение
+
+		}
+	});
+    })
+
 
     </script>
+
 </head>
 <body>
 <div class="container">
-    <form class="form-signin" role="form" th:action="@{/registration}" th:method="post" th:object="${user}">
+    <form class="form-signin" role="form" th:action="@{/registration}" th:method="post" th:object="${client}">
         <h2 class="form-signin-heading">Please sign up</h2>
         <p>
-            <label for="username" class="sr-only">Name</label>
-            <input type="text" id="username" name="username" th:field="*{username}" class="form-control" placeholder="Name" required autofocus>
+            <label for="email" class="sr-only">Name</label>
+            <input type="email" id="email" name="email" th:field="*{email}" class="form-control" placeholder="email" required autofocus>
+        </p>
+        <p>
+            <label for="fullname" class="sr-only">Name</label>
+            <input type="text" id="fullname" name="fullname" th:field="*{FullName}" class="form-control" placeholder="FullName" required autofocus>
+        </p>
+        <p>
+            <label for="passport" class="sr-only">Name</label>
+            <input type="text" id="passport" name="passport" th:field="*{passport}" class="form-control" placeholder="passport" required autofocus>
+        </p>
+        <p>
+            <label for="phoneNumber" class="sr-only">Name</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" th:field="*{phoneNumber}" class="form-control" placeholder="phoneNumber" required autofocus>
         </p>
         <p>
             <label for="password" class="sr-only">Password</label>
@@ -44,10 +68,13 @@
 
         </p>
 
+        <div class="error"></div>
+
+        <button name="Submit" type="submit" value="submit" id="submit" class="btn btn-lg btn-primary btn-block mx-auto" style="width: 45%">Sign up</button>
 
     </form>
 
-    <button onclick="checkPasswordMatch()" class="btn btn-lg btn-primary btn-block mx-auto" style="width: 15%">Sign up</button>
+
 </div>
 </body>
 </html>
