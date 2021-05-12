@@ -61,8 +61,13 @@ public class MyController {
     }
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String getTestPage() {
-        return "test";
+    String showhome(Model model, Principal principal) {
+
+        String role = clientService.getClient(principal.getName()).getAuthorities().size() == 1 ? "ROLE_USER" : "ROLE_ADMIN";
+        model.addAttribute("role", role);
+        System.out.println(clientService.getClient(principal.getName()).getAuthorities() + " " + role + "");
+
+        return "home";
     }
 
     @RequestMapping(value = "/home/createcar", method = RequestMethod.POST)

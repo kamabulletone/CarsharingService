@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content>
+    <meta name="author" content>
+    <title>Please sign in</title>
+    <meta charset="UTF-8">
+    <title>Choosing page</title>
+</head>
+<body>
+
+
+
+
+<a href="/admin/registration" class="admin" th:if="${role == 'ROLE_ADMIN'}">Добавить машину</a> <br>
+<a href="/admin/deleteuser" class="admin" th:if="${role == 'ROLE_ADMIN'}">Удалить пользователя</a> <br>
+<a href="/admin/creatework" class="admin">Создать новую услугу</a> <br>
+<a href="/admin/deletework" class="admin">Удалить услугу</a>
+<br>
+<a href="/logout">Выход</a>
+
+</body>
+</html>

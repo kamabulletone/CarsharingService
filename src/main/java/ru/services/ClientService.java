@@ -7,12 +7,40 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.model.Client;
+import ru.model.Role;
 import ru.repositories.ClientRepository;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class ClientService implements UserDetailsService {
     @Autowired
     BCryptPasswordEncoder encoder;
+
+    @Autowired
+    ClientRepository clientRepository;
+
+    @Autowired
+    ClientService(ClientRepository reps, BCryptPasswordEncoder encoder) {
+        this.reps = reps;
+        this.encoder = encoder;
+        Client admin = new Client();
+        admin.setClientID(1);
+        admin.setEmail("admin");
+        admin.setFullName("admin");
+        admin.setPassword(encoder.encode("admin"));
+        Set<Role> set = new HashSet<Role>();
+        set.add(new Role(1, "ROLE_USER"));
+        set.add(new Role(2, "ROLE_ADMIN"));
+        admin.setRoles(set);
+        Client user = reps.findByEmail("admin");
+        if (user == null) {
+            reps.save(admin);
+        }
+
+    }
 
     @Autowired
     private ClientRepository reps;
@@ -26,6 +54,8 @@ public class ClientService implements UserDetailsService {
     }
 
     public void signUpUser(Client user) {
+
+        user.setRoles(Collections.singleton(new Role(1, "ROLE_USER")));
 
         final String encryptedPassword = encoder.encode(user.getPassword());
 

@@ -11,8 +11,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -45,15 +47,19 @@ public class Client implements UserDetails {
     @Column(name = "phone_num")
     private String phoneNumber;
 
+
     @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "password")
     private String password;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return getRoles();
     }
 
     @Override

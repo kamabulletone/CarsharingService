@@ -35,3 +35,8 @@ ON DUPLICATE KEY UPDATE car_registr_num = values(car_registr_num),
 --        (3,3,3,3, curdate() )
 --ON DUPLICATE KEY UPDATE car_id_fk = values(car_id_fk),client_id_fk = values(client_id_fk),
 --                        order_status_fk = values(order_status_fk), created_on = values(created_on);
+
+INSERT INTO carsharing.roles(id, name)
+values (1, 'ROLE_USER'),
+       (2, 'ROLE_ADMIN')
+ON DUPLICATE KEY UPDATE name = values(name);

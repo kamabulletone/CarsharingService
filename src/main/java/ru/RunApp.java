@@ -10,14 +10,6 @@ import ru.model.Client;
 public class RunApp {
     public static void main(String[] args) {
         SpringApplication.run(RunApp.class, args);
-        Client client = new Client();
-        Client client1 = new Client();
-        System.out.println(client.toString());
-        System.out.println(client1.toString());
-
-        Car clint1 = new Car();
-        System.out.println(clint1.toString());
-
 
         try {
             Thread.sleep(Long.MAX_VALUE);
