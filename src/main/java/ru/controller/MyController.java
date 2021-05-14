@@ -13,6 +13,7 @@ import ru.model.*;
 import ru.services.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -75,6 +76,15 @@ public class MyController {
     public void createItem(@RequestBody Car w) {
 
         carService.insertCar(w);
+    }
+
+    @RequestMapping(value = "/home/createcar", method = RequestMethod.GET)
+    public String createItem(Model model) {
+        model.addAttribute("cars", carService.getCars());
+
+
+        return "addCar";
+
     }
 
     @RequestMapping(value = "/map", method = RequestMethod.GET)
