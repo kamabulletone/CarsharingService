@@ -54,4 +54,8 @@ public class CarService {
         log.info("Delete item {}", a);
         reps.delete(a);
     }
+
+    public void deleteById(int id) {
+        reps.delete(getCar(id));
+    }
 }

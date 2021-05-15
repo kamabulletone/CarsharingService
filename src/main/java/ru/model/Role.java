@@ -1,5 +1,6 @@
 package ru.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,6 +25,7 @@ public class Role implements GrantedAuthority {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
+    @JsonBackReference
     private Set<Client> clients;
 
     public Role(int id, String name) {

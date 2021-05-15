@@ -78,14 +78,50 @@ public class MyController {
         carService.insertCar(w);
     }
 
-    @RequestMapping(value = "/home/createcar", method = RequestMethod.GET)
-    public String createItem(Model model) {
+
+
+
+    @RequestMapping(value = "/home/deletecar", method = RequestMethod.POST)
+    public String deleteCar(@RequestParam(value = "cars") int[] carsId) {
+        for (int carid:carsId
+        ) {
+            System.out.println(carid);
+            carService.deleteById(carid);
+        }
+        return "redirect:/home/delete";
+
+    }
+
+
+
+    @RequestMapping(value = "/home/delete", method = RequestMethod.GET)
+    public String getDeleteV(Model model) {
+        model.addAttribute("clients", clientService.getClients());
+        System.out.println(clientService.getClients());
         model.addAttribute("cars", carService.getCars());
 
 
-        return "addCar";
+        return "delete";
 
     }
+
+    @RequestMapping(value = "/home/deleteclient", method = RequestMethod.POST)
+    public String deleteClient(@RequestParam(value = "clients") int[] clientsId) {
+        for (int clientId:clientsId
+             ) {
+            System.out.println(clientId);
+            clientService.deleteById(clientId);
+        }
+        return "redirect:/home/delete";
+
+    }
+
+
+
+
+
+
+
 
     @RequestMapping(value = "/map", method = RequestMethod.GET)
     public ResponseEntity<List<OrderDto>> getAllOrders() {

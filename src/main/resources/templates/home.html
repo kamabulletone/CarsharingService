@@ -23,10 +23,10 @@
 <div>
     <a href="/admin/creatework" class="admin">Создать заказ</a> <br>
     <a href="/admin/deletework" class="admin">Удалить услугу</a>
-    <p th:if="${role == 'ROLE_ADMIN'}"><a href="/admin/addcar" class="admin" >Добавить машину</a> </p>
-    <p th:if="${role == 'ROLE_ADMIN'}"><a href="/admin/addclient" class="admin" >Добавить клиента</a></p>
-    <p th:if="${role == 'ROLE_ADMIN'}"><a href="/admin/deletecar" class="admin" >Удалить машину</a> </p>
-    <p th:if="${role == 'ROLE_ADMIN'}"><a href="/admin/deleteclient" class="admin" >Удалить клиента</a></p>
+    <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/addcar" class="admin" >Добавить машину</a> </p>
+    <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/addclient" class="admin" >Добавить клиента</a></p>
+    <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/deletecar" class="admin" >Удалить машину</a> </p>
+    <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/deleteclient" class="admin" >Удалить клиента</a></p>
 </div>
 
 

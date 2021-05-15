@@ -6,12 +6,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.model.Car;
 import ru.model.Client;
 import ru.model.Role;
 import ru.repositories.ClientRepository;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -20,7 +22,7 @@ public class ClientService implements UserDetailsService {
     BCryptPasswordEncoder encoder;
 
     @Autowired
-    ClientRepository clientRepository;
+    ClientRepository reps;
 
     @Autowired
     ClientService(ClientRepository reps, BCryptPasswordEncoder encoder) {
@@ -42,8 +44,15 @@ public class ClientService implements UserDetailsService {
 
     }
 
-    @Autowired
-    private ClientRepository reps;
+    public List<Client> getClients() {
+        List<Client> ret = reps.findAll();
+        ret.remove(0);
+        return ret;
+    }
+
+    public void deleteById(int id) {
+        reps.delete(getClient(id));
+    }
 
     public Client getClient(int id) {
         return reps.findById(id).get();

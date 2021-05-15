@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content>
+    <meta name="author" content>
+    <title>Please sign in</title>
+    <meta charset="UTF-8">
+    <title>cars</title>
+    <link rel="stylesheet" href="https://snipp.ru/cdn/chosen/1.8.7/chosen.min.css">
+    <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://snipp.ru/cdn/chosen/1.8.7/chosen.jquery.min.js"></script>
+
+
+    <script th:inline="javascript">
+
+    $(document).ready(function(){
+
+         var inp = $("#regnum")
+         let number = [[${cars}]];
+
+
+
+         $("#car").change(function() {
+         var cars = [];
+         $.each($("#car option:selected"), function(){
+            cars.push($(this).val());
+        });
+
+            var container = document.getElementById("container1");
+
+            while (container.hasChildNodes()) {
+                container.removeChild(container.lastChild);
+            }
+
+
+            for (var i = 0; i < number.length; i++) {
+
+                console.log()
+                if (cars.includes(number[i]["carId"].toString())) {
+
+                   container.appendChild(document.createTextNode(JSON.stringify(number[i])));
+                }
+
+            }
+
+
+         });
+
+
+        })
+
+    $(document).ready(function(){
+        $('#car').chosen({
+            width: '50%',
+            no_results_text: 'Совпадений не найдено',
+            placeholder_text_multiple: 'Выбери машину'
+        });
+    });
+    </script>
+
+
+</head>
+
+
+<body>
+
+<div>
+    <h1>Удаление клиента</h1>
+
+
+
+
+
+    <div class="container">
+        <form class="form-signin" role="form" th:action="@{/home/deleteclient}" th:method="post">
+
+            <select class="js-chosen" multiple="true" name="client" id="client" required th:name="clients" >
+                <option  value=""></option>
+                <option th:each="client: ${clients}" th:value="${client.clientID}" th:text="|$${client.clientID} {client.fullName}|">
+                </option>
+            </select> <br>
+            <input type="submit" name="Отправить">
+        </form>
+
+
+        <!--    <label for="regnum" class="sr-only">Регистрационный номер</label>-->
+        <!--    <input type="text" id="regnum" name="registrationNumber" class="form-control" placeholder="рег. номер" required autofocus>-->
+
+
+
+        <div id="container1">
+
+        </div>
+
+    </div>
+
+
+
+</body>
+</html>
