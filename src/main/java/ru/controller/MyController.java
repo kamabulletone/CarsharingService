@@ -79,6 +79,14 @@ public class MyController {
     }
 
 
+//    @RequestMapping(value = "/home/createorder", method = RequestMethod.POST)
+//    @ResponseBody
+//    public void createOrder(@RequestBody Car w) {
+//
+//        carService.insertCar(w);
+//    }
+
+
 
 
     @RequestMapping(value = "/home/deletecar", method = RequestMethod.POST)
@@ -128,8 +136,9 @@ public class MyController {
         return new ResponseEntity<List<OrderDto>> (mapService.getAllOrders(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/showcars" , method = RequestMethod.GET)
+    @RequestMapping(value = "/home/createorder" , method = RequestMethod.GET)
     public String showCars(Model model, Principal principal) {
+        model.addAttribute("order", new Order());
         model.addAttribute("cars", carService.getCars());
         System.out.println(principal.getName());
         model.addAttribute("clientName",principal.getName());
@@ -138,6 +147,20 @@ public class MyController {
        // OrderDto orderDto = new OrderDto()
        // createOrder();
         return "choose";
+    }
+
+    @RequestMapping(value = "/home/createorder" , method = RequestMethod.POST)
+    public String showCars(@ModelAttribute Order order, Principal principal) {
+
+        System.out.println(order.toString());
+        order.setOrderStatus(orderService.getOrderStatus(1));
+        order.setClient(clientService.getClient(principal.getName()));
+        System.out.println(order);
+        orderService.insertOrder(order);
+        carService.updateStatus("in use",order.getCar().getCarId());
+        // OrderDto orderDto = new OrderDto()
+        // createOrder();
+        return "redirect:/home";
     }
 
 //    @RequestMapping(value = "/showselectedcar", method = RequestMethod.POST)
@@ -154,20 +177,6 @@ public class MyController {
         return "redirect:/showcars";
     }
 
-//    @RequestMapping(value = "/home/createorder", method = RequestMethod.POST)
-//    @ResponseBody
-//    public void createOrder(@RequestBody Order w) {
-//
-//        orderService.insertOrder(w);
-//    }
-
-    @RequestMapping(value = "/home/createorder", method = RequestMethod.POST)
-    @ResponseBody
-    public void createOrder(@RequestBody OrderDto orderDto) {
-        System.out.println(orderDto.toString());
-        Order order = mapService.convertToOrder(orderDto);
-        orderService.insertOrder(order);
-    }
 
     @RequestMapping(value = "/home/deleteitem", method = RequestMethod.POST)
     @ResponseBody

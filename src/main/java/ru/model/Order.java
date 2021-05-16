@@ -4,10 +4,7 @@ package ru.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.mapping.Join;
 
 import javax.persistence.*;
@@ -19,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Setter
 @Getter
+@ToString
 @Table(name = "orders", schema = "carsharing", uniqueConstraints={@UniqueConstraint(columnNames ={"order_id", "client_id_FK",
         "car_id_FK","order_status_FK", "created_on"})})
 //@JsonIgnoreProperties(ignoreUnknown = true,
@@ -45,11 +43,11 @@ public class Order {
     private OrderStatus orderStatus;
 
     @Column(name = "created_on", nullable = false)
-    private LocalDate createdOn;
+    private LocalDateTime createdOn;
 
     @PrePersist
     public void prePersist() {
-        createdOn = LocalDate.now();
+        createdOn = LocalDateTime.now();
 
     }
 

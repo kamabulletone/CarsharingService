@@ -45,6 +45,10 @@ public class CarService {
 //        return reps.findAll(Sort.by("price"));
 //    }
 
+    public void updateStatus(String status, int id) {
+        reps.changeCarStatus(status,id);
+    }
+
     public void insertCar(Car a) {
         log.info("Save item {}", a);
         reps.save(a);

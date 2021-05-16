@@ -12,6 +12,9 @@
 
     <h1>Data table</h1>
     <div>
+        <p th:text="${clientName}"></p>
+    </div>
+    <div>
         <table border="1">
             <tr>
                 <th>MARK</th>
@@ -19,7 +22,7 @@
                 <th>REG_NUM</th>
                 <th>STATUS</th>
             </tr>
-            <tr th:each = "car : ${cars}">
+            <tr th:each = "car : ${cars}" th:if="${car.carStatus == 'free'}">
                 <td th:text="${car.carMark}"> </td>
                 <td th:text="${car.carModel}"> </td>
                 <td th:text="${car.carRegistrationNumber}"> </td>
@@ -30,19 +33,15 @@
     </div>
 
 
-<!--    <select th:field="*{car}">-->
-<!--        <option th:each="i : ${#numbers.sequence(0, 100)}" th:value="${i}" th:text="${i}">-->
-<!--        </option>-->
-<!--    </select>-->
 
-    <form name='f' action="#" th:action="@{/showselectedcar}" method='POST'>
+    <form name='f' action="#" th:action="@{/home/createorder}" method='POST' th:object="${order}">
         <table>
             <tr>
                 <td>Select car:</td>
                 <td>
-                    <select name="car" id="car" th:name="carId">
-                        <option value=""> -- </option>
-                        <option th:each="car : ${cars}"
+                    <select name="car" id="car" th:field="*{car}">
+<!--                        <option value=""> &#45;&#45; </option>-->
+                        <option th:each="car : ${cars}" th:if="${car.carStatus == 'free'}"
                                 th:value="${car.carId}"
                                 th:text="|${car.carMark} ${car.carModel} ${car.carStatus}|">
 
@@ -53,7 +52,7 @@
             </tr>
 
             <tr>
-                <td><input name="submit" type="submit" value="Submit" /></td>
+                <td><input name="Взять машину" type="submit" value="Submit" /></td>
             </tr>
         </table>
     </form>

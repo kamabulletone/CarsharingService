@@ -21,12 +21,11 @@
 <body>
 
 <div>
-    <a href="/admin/creatework" class="admin">Создать заказ</a> <br>
+    <a href="/home/createorder" class="admin">Создать заказ</a> <br>
     <a href="/admin/deletework" class="admin">Удалить услугу</a>
     <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/addcar" class="admin" >Добавить машину</a> </p>
     <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/addclient" class="admin" >Добавить клиента</a></p>
-    <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/deletecar" class="admin" >Удалить машину</a> </p>
-    <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/deleteclient" class="admin" >Удалить клиента</a></p>
+    <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/delete" class="admin" >Удалить машину или клиента</a> </p>
 </div>
 
 
