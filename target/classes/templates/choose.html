@@ -40,7 +40,7 @@
                 <td>Select car:</td>
                 <td>
                     <select name="car" id="car" th:field="*{car}">
-<!--                        <option value=""> &#45;&#45; </option>-->
+                        <option value=""> -- </option>
                         <option th:each="car : ${cars}" th:if="${car.carStatus == 'free'}"
                                 th:value="${car.carId}"
                                 th:text="|${car.carMark} ${car.carModel} ${car.carStatus}|">

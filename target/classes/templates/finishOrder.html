@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content>
+    <meta name="author" content>
+    <title>Please sign in</title>
+    <meta charset="UTF-8">
+    <title>cars</title>
+    <link rel="stylesheet" href="https://snipp.ru/cdn/chosen/1.8.7/chosen.min.css">
+    <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://snipp.ru/cdn/chosen/1.8.7/chosen.jquery.min.js"></script>
+
+    <script th:inline="javascript">
+
+$(document).ready(function(){
+
+        var minutesLabel = document.getElementById("minutes");
+        var secondsLabel = document.getElementById("seconds");
+        if (sessionStorage.totalSeconds) {
+             var totalSeconds = sessionStorage.totalSeconds;
+             setInterval(setTime, 1000);
+        } else {
+          sessionStorage.totalSeconds = 0;
+          sessionStorage.totalMinutes = 0;
+        }
+<!--        var totalSeconds = 0;-->
+<!--        setInterval(setTime, 1000);-->
+
+
+
+        function setTime()
+        {
+            ++totalSeconds;
+            secondsLabel.innerHTML = pad(totalSeconds%60);
+            minutesLabel.innerHTML = pad(parseInt(totalSeconds/60));
+            sessionStorage.totalSeconds = totalSeconds;
+            sessionStorage.totalMinutes = parseInt(totalSeconds/60);
+        }
+
+        function pad(val)
+        {
+            var valString = val + "";
+            if(valString.length < 2)
+            {
+                return "0" + valString;
+            }
+            else
+            {
+                return valString;
+            }
+        }
+
+
+    });
+
+
+
+
+    </script>
+
+</head>
+
+
+<body>
+
+<div>
+    <h1>Завершение заказа</h1>
+
+    <div class="container">
+        <form class="form-signin" role="form" th:action="@{/home/finishorder}" th:method="post">
+
+            <div class="timer">
+                <label id="minutes" >00</label>
+                <label id="colon">:</label>
+                <label id="seconds">00</label>
+            </div>
+
+            <input type="submit" name="Завершить">
+        </form>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

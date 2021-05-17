@@ -71,11 +71,17 @@ public class MyController {
         return "home";
     }
 
-    @RequestMapping(value = "/home/createcar", method = RequestMethod.POST)
-    @ResponseBody
-    public void createItem(@RequestBody Car w) {
 
-        carService.insertCar(w);
+    @RequestMapping(value = "/home/finishorder", method = RequestMethod.GET)
+    public String finishOrdeV(Model model) {
+
+        return "finishOrder";
+    }
+
+    @RequestMapping(value = "/home/finishorder", method = RequestMethod.POST)
+    public String finishOrder(@RequestBody Car w) {
+
+        return "redirect:/home";
     }
 
 
@@ -160,7 +166,7 @@ public class MyController {
         carService.updateStatus("in use",order.getCar().getCarId());
         // OrderDto orderDto = new OrderDto()
         // createOrder();
-        return "redirect:/home";
+        return "redirect:/finishOrder";
     }
 
 //    @RequestMapping(value = "/showselectedcar", method = RequestMethod.POST)
