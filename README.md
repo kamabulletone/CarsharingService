@@ -27,13 +27,13 @@ ____
 - [ ] Контроллеры
     - [x] MyController
 - [ ] Репозитории
-    	- [x] ClientRepository
+	- [x] ClientRepository
 	- [x] CarRepository
 	- [x] OrderRepository
 	- [x] OrderStatusRepository
 	- [x] RoleRepository
 - [ ] Сервисы
-    	- [x] ClientService
+	- [x] ClientService
 	- [x] CarService
 	- [x] OrderService
 	- [x] MapService  
