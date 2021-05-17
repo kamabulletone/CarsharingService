@@ -17,13 +17,23 @@ $(document).ready(function(){
 
         var minutesLabel = document.getElementById("minutes");
         var secondsLabel = document.getElementById("seconds");
-        if (sessionStorage.totalSeconds) {
-             var totalSeconds = sessionStorage.totalSeconds;
-             setInterval(setTime, 1000);
+        var cost = $("#cost");
+
+
+
+        console.log("now is " + now)
+        if (sessionStorage.length !== 0 ) {
+            console.log(sessionStorage.totalSeconds);
         } else {
           sessionStorage.totalSeconds = 0;
           sessionStorage.totalMinutes = 0;
+          var now = new Date();
+          sessionStorage.currDate = now.getTime();
+          console.log("sdsdsd" + sessionStorage.currDate)
         }
+
+        var totalSeconds = sessionStorage.totalSeconds;
+        var a = setInterval(setTime, 1000);
 <!--        var totalSeconds = 0;-->
 <!--        setInterval(setTime, 1000);-->
 
@@ -31,11 +41,16 @@ $(document).ready(function(){
 
         function setTime()
         {
-            ++totalSeconds;
-            secondsLabel.innerHTML = pad(totalSeconds%60);
-            minutesLabel.innerHTML = pad(parseInt(totalSeconds/60));
-            sessionStorage.totalSeconds = totalSeconds;
+            let newDate = new Date();
+<!--            console.log(newDate)-->
+<!--            console.log(Math.abs((newDate.getTime() - sessionStorage.currDate ) / 1000) )-->
+            sessionStorage.totalSeconds = Math.ceil(Math.abs((newDate.getTime() - sessionStorage.currDate ) / 1000));
+            secondsLabel.innerHTML = pad(sessionStorage.totalSeconds%60);
+            minutesLabel.innerHTML = pad(parseInt(sessionStorage.totalSeconds/60));
+<!--            sessionStorage.totalSeconds = totalSeconds;-->
             sessionStorage.totalMinutes = parseInt(totalSeconds/60);
+            cost.attr("value", Number(parseFloat(cost.val()) + 0.2).toFixed(1));
+            console.log(cost.val());
         }
 
         function pad(val)
@@ -50,6 +65,26 @@ $(document).ready(function(){
                 return valString;
             }
         }
+
+        $("#stop" ).click(function() {
+
+          clearInterval(a);
+          sessionStorage.clear();
+        });
+
+        $("#submit" ).click(function() {
+
+
+          clearInterval(a);
+          sessionStorage.clear();
+        });
+
+        $("#submit").submit(function(e) {
+
+            e.preventDefault();
+        });
+
+
 
 
     });
@@ -68,7 +103,7 @@ $(document).ready(function(){
     <h1>Завершение заказа</h1>
 
     <div class="container">
-        <form class="form-signin" role="form" th:action="@{/home/finishorder}" th:method="post">
+        <form class="form-signin" id="form" role="form" th:action="@{/home/finishorder}" th:method="post">
 
             <div class="timer">
                 <label id="minutes" >00</label>
@@ -76,8 +111,16 @@ $(document).ready(function(){
                 <label id="seconds">00</label>
             </div>
 
-            <input type="submit" name="Завершить">
+            <option value=""></option>
+
+
+            <div >
+                <input type="text" th:name="cost" id="cost" th:value="1" readonly>
+            </div>
+
+            <input type="submit" name="Завершить" id="submit">
         </form>
+        <button id="stop">Отстановить</button>
 
     </div>
 
