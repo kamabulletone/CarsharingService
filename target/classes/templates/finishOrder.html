@@ -17,11 +17,16 @@ $(document).ready(function(){
 
         var minutesLabel = document.getElementById("minutes");
         var secondsLabel = document.getElementById("seconds");
+        var starttime = [[${starttime}]];
         var cost = $("#cost");
+        console.log(sessionStorage.visitCount)
+<!--        if (sessionStorage.visitCount <1 ) {-->
+<!--          sessionStorage.totalSeconds = 0;-->
+<!--          sessionStorage.totalMinutes = 0;-->
+<!--            clearInterval(a);-->
+<!--            return;-->
+<!--        }-->
 
-
-
-        console.log("now is " + now)
         if (sessionStorage.length !== 0 ) {
             console.log(sessionStorage.totalSeconds);
         } else {
@@ -29,7 +34,7 @@ $(document).ready(function(){
           sessionStorage.totalMinutes = 0;
           var now = new Date();
           sessionStorage.currDate = now.getTime();
-          console.log("sdsdsd" + sessionStorage.currDate)
+
         }
 
         var totalSeconds = sessionStorage.totalSeconds;
@@ -50,7 +55,7 @@ $(document).ready(function(){
 <!--            sessionStorage.totalSeconds = totalSeconds;-->
             sessionStorage.totalMinutes = parseInt(totalSeconds/60);
             cost.attr("value", Number(parseFloat(cost.val()) + 0.2).toFixed(1));
-            console.log(cost.val());
+<!--            console.log(cost.val());-->
         }
 
         function pad(val)
@@ -74,7 +79,8 @@ $(document).ready(function(){
 
         $("#submit" ).click(function() {
 
-
+<!--          $(window).unbind("beforeunload");-->
+          sessionStorage.visitCount = 1;
           clearInterval(a);
           sessionStorage.clear();
         });
@@ -82,7 +88,12 @@ $(document).ready(function(){
         $("#submit").submit(function(e) {
 
             e.preventDefault();
+
         });
+
+<!--        $(window).bind('beforeunload', function () {-->
+<!--            console.log("cringe")-->
+<!--        });-->
 
 
 

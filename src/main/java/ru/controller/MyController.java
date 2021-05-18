@@ -79,21 +79,22 @@ public class MyController {
     }
 
     @RequestMapping(value = "/home/finishorder", method = RequestMethod.POST)
-    public String finishOrder(@RequestParam(value="cost", required = true) String cost, Principal principal) {
+    public String finishOrder(@RequestParam(value="cost", required = true) String cost, Principal principal ) {
         System.out.println("cost = " + cost);
 
-        return "redirect:/home";
+        Client cl = clientService.getClient(principal.getName());
+        Order o = orderService.getLastOrderByCl(cl);
+        OrderStatus os = orderService.getOrderStatus(2); //finished
+
+        orderService.updateOrderStatus(os, o.getOrderId());
+        carService.updateStatus("free",o.getCar().getCarId());
+
+
+
+
+        return  "redirect:/home";
 
     }
-
-
-//    @RequestMapping(value = "/home/createorder", method = RequestMethod.POST)
-//    @ResponseBody
-//    public void createOrder(@RequestBody Car w) {
-//
-//        carService.insertCar(w);
-//    }
-
 
 
 
@@ -108,7 +109,16 @@ public class MyController {
 
     }
 
+    @RequestMapping(value = "/home/deleteclient", method = RequestMethod.POST)
+    public String deleteClient(@RequestParam(value = "clients") int[] clientsId) {
+        for (int clientId:clientsId
+        ) {
+            System.out.println(clientId);
+            clientService.deleteById(clientId);
+        }
+        return "redirect:/home/delete";
 
+    }
 
     @RequestMapping(value = "/home/delete", method = RequestMethod.GET)
     public String getDeleteV(Model model) {
@@ -121,23 +131,20 @@ public class MyController {
 
     }
 
-    @RequestMapping(value = "/home/deleteclient", method = RequestMethod.POST)
-    public String deleteClient(@RequestParam(value = "clients") int[] clientsId) {
-        for (int clientId:clientsId
-             ) {
-            System.out.println(clientId);
-            clientService.deleteById(clientId);
-        }
-        return "redirect:/home/delete";
-
+    @RequestMapping(value = "/home/createorder" , method = RequestMethod.GET)
+    public String showCars(Model model, Principal principal) {
+        model.addAttribute("order", new Order());
+        model.addAttribute("cars", carService.getCars());
+        System.out.println(principal.getName());
+        model.addAttribute("clientName",principal.getName());
+        Client client = clientService.getClient(principal.getName());
+        System.out.println(client);
+        // OrderDto orderDto = new OrderDto()
+        // createOrder();
+        return "choose";
     }
 
 
-
-    @RequestMapping(value = "/map", method = RequestMethod.GET)
-    public ResponseEntity<List<OrderDto>> getAllOrders() {
-        return new ResponseEntity<List<OrderDto>> (mapService.getAllOrders(), HttpStatus.OK);
-    }
 
     @RequestMapping(value = "/home/testcars" , method = RequestMethod.GET)
     public String testuser(Model model, Principal principal) {
@@ -152,31 +159,27 @@ public class MyController {
         return "test";
     }
 
-    @RequestMapping(value = "/home/createorder" , method = RequestMethod.GET)
-    public String showCars(Model model, Principal principal) {
-        model.addAttribute("order", new Order());
-        model.addAttribute("cars", carService.getCars());
-        System.out.println(principal.getName());
-        model.addAttribute("clientName",principal.getName());
-        Client client = clientService.getClient(principal.getName());
-        System.out.println(client);
-       // OrderDto orderDto = new OrderDto()
-       // createOrder();
-        return "choose";
-    }
+
 
     @RequestMapping(value = "/home/createorder" , method = RequestMethod.POST)
-    public String showCars(@ModelAttribute Order order, Principal principal) {
+    public String showCars(@ModelAttribute Order order, Principal principal, Model model) {
 
-        System.out.println(order.toString());
-        order.setOrderStatus(orderService.getOrderStatus(1));
-        order.setClient(clientService.getClient(principal.getName()));
-        System.out.println(order);
-        orderService.insertOrder(order);
-        carService.updateStatus("in use",order.getCar().getCarId());
-        // OrderDto orderDto = new OrderDto()
-        // createOrder();
-        return "redirect:/finishOrder";
+//        System.out.println(order.toString());
+        Client cl = clientService.getClient(principal.getName());
+        Order o = orderService.getLastOrderByCl(cl);
+        if (o == null || o.getOrderStatus().getId() != 1) {
+            order.setOrderStatus(orderService.getOrderStatus(1));
+            order.setClient(clientService.getClient(principal.getName()));
+            orderService.insertOrder(order);
+            carService.updateStatus("in use",order.getCar().getCarId());
+        }
+        else {
+            model.addAttribute("error", "У вас есть незаверешенный заказ");
+            return "error";
+        }
+
+
+        return "redirect:/home/finishorder";
     }
 
 //    @RequestMapping(value = "/showselectedcar", method = RequestMethod.POST)
@@ -193,58 +196,5 @@ public class MyController {
         return "redirect:/showcars";
     }
 
-
-//    @RequestMapping(value = "/home/deleteitem", method = RequestMethod.POST)
-//    @ResponseBody
-//    public void delItem(@RequestBody Car w) {
-//        carService.deleteCar(w);
-//    }
-//
-//    @RequestMapping(value = "/home/deleteorder", method = RequestMethod.POST)
-//    @ResponseBody
-//    public void delOrder(@RequestBody Order w) {
-//        orderService.deleteOrder(w);
-//    }
-//
-//    @RequestMapping(value = "/home/outcar", method = RequestMethod.GET)
-//    public ResponseEntity<List<Car>> outItem() {
-//        return new ResponseEntity<List<Car>> (carService.getCars(), HttpStatus.OK);
-//    }
-//
-//    @RequestMapping(value = "/home/outorder", method = RequestMethod.GET)
-//    public ResponseEntity<List<Order>> outOrder() {
-//        return new ResponseEntity<List<Order>> (orderService.getOrders(), HttpStatus.OK);
-//    }
-//
-//    @RequestMapping(value = "home/order/{orderDate}/item", method = RequestMethod.GET)
-//    @ResponseBody
-//    public Car getOrderItem(@PathVariable("orderDate") String orderDate) {
-//        return orderService.getCarByOrder(orderDate);
-//    }
-
-//    @RequestMapping(value = "/home/outitem/orderbyname", method = RequestMethod.GET)
-//    public ResponseEntity<List<Car>> orderByName() {
-//        return new ResponseEntity<List<Car>>(carService.orderByName() , HttpStatus.OK);
-//    }
-//
-//    @RequestMapping(value = "/home/outitem/orderbydate", method = RequestMethod.GET)
-//    public ResponseEntity<List<Car>> orderByDate() {
-//        return new ResponseEntity<List<Car>>(carService.orderByDate() , HttpStatus.OK);
-//    }
-//
-//    @RequestMapping(value = "/home/outitem/orderbyprice", method = RequestMethod.GET)
-//    public ResponseEntity<List<Car>> orderByPrice() {
-//        return new ResponseEntity<List<Car>>(carService.orderByPrice() , HttpStatus.OK);
-//    }
-//
-//    @RequestMapping(value = "/home/outorder/orderbydate", method = RequestMethod.GET)
-//    public ResponseEntity<List<Order>> orderByOrderDate() {
-//        return new ResponseEntity<List<Order>>(orderService.orderByOrderDate(), HttpStatus.OK);
-//    }
-//
-//    @RequestMapping(value = "/home/outorder/orderbyname", method = RequestMethod.GET)
-//    public ResponseEntity<List<Order>> orderByItemName() {
-//        return new ResponseEntity<List<Order>>(orderService.orderByItemName(), HttpStatus.OK);
-//    }
 
 }

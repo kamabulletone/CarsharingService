@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.model.Car;
+import ru.model.Client;
 import ru.model.Order;
 import ru.model.OrderStatus;
 import ru.repositories.OrderRepository;
@@ -38,15 +39,22 @@ public class OrderService {
         return reps.findAll();
     }
 
+    public Order getLastOrderByCl(Client client) {
+        return reps.getOrdersByCl(client);
+    }
+
     public void insertOrder(Order a) {
         log.info("Save order {}", a);
         reps.save(a);
-
     }
 
     public void deleteOrder(Order a) {
         log.info("Delete order {}", a);
         reps.delete(a);
+    }
+
+    public void updateOrderStatus(OrderStatus os, int id) {
+        reps.changeOrderStatus(os,id);
     }
 
     public Car getCarByOrder(String orderDate) {
