@@ -167,12 +167,20 @@ public class MyController {
 //        System.out.println(order.toString());
         Client cl = clientService.getClient(principal.getName());
         Order o = orderService.getLastOrderByCl(cl);
+        Car goodCar = carService.getCar(order.getCar().getCarId());
+
+        if (!goodCar.getCarStatus().equals("free")) {
+            model.addAttribute("error", "Машина уже используется");
+            return "error";
+        }
+
         if (o == null || o.getOrderStatus().getId() != 1) {
             order.setOrderStatus(orderService.getOrderStatus(1));
             order.setClient(clientService.getClient(principal.getName()));
             orderService.insertOrder(order);
             carService.updateStatus("in use",order.getCar().getCarId());
         }
+
         else {
             model.addAttribute("error", "У вас есть незаверешенный заказ");
             return "error";
