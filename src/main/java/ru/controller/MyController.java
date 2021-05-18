@@ -171,7 +171,10 @@ public class MyController {
 
         if (!goodCar.getCarStatus().equals("free")) {
             model.addAttribute("error", "Машина уже используется");
-            return "error";
+            model.addAttribute("order", new Order());
+            model.addAttribute("cars", carService.getCars());
+            model.addAttribute("clientName",principal.getName());
+            return "choose";
         }
 
         if (o == null || o.getOrderStatus().getId() != 1) {
