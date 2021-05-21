@@ -66,6 +66,7 @@ public class MyController {
 
         String role = clientService.getClient(principal.getName()).getAuthorities().size() == 1 ? "ROLE_USER" : "ROLE_ADMIN";
         model.addAttribute("role", role);
+        model.addAttribute("clientName",principal.getName());
         System.out.println(clientService.getClient(principal.getName()).getAuthorities() + " " + role + "");
 
         return "home";
@@ -193,11 +194,6 @@ public class MyController {
         return "redirect:/home/finishorder";
     }
 
-//    @RequestMapping(value = "/showselectedcar", method = RequestMethod.POST)
-//    public String showCarsSubmit(@ModelAttribute Car car) {
-//        System.out.println(car.toString());
-//        return "redirect:/showcars";
-//    }
 
     @RequestMapping(value = "/showselectedcar", method = RequestMethod.POST)
     public String showCarsSubmit(@RequestParam(value = "carId", required = true) int carId) {

@@ -7,12 +7,20 @@
     <title>Please sign in</title>
     <meta charset="UTF-8">
     <title>Choosing page</title>
-
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <style>
         p {
         margin: 0;
         }
     </style>
+
+    <script>
+        $(document).ready(function() {
+          $("p a").addClass("text-dark");
+
+});
+    </script>
 
 </head>
 
@@ -20,17 +28,29 @@
 
 <body>
 
-<div>
-    <a href="/home/createorder" class="admin">Создать заказ</a> <br>
-    <a href="/admin/deletework" class="admin">Удалить услугу</a>
-    <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/addcar" class="admin" >Добавить машину</a> </p>
-    <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/addclient" class="admin" >Добавить клиента</a></p>
-    <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/delete" class="admin" >Удалить машину или клиента</a> </p>
+
+<div class="ml-3 mt-3 color-dark">
+
+    <p class="h3">
+        Домашняя страница
+    </p>
+    <div class="text-dark ">
+        <p><a href="/home/createorder" class="admin">Создать заказ</a></p>
+        <!--    <a href="/admin/deletework" class="admin">Удалить услугу</a>-->
+        <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/addcar" class="admin" >Добавить машину</a> </p>
+        <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/addclient" class="admin" >Добавить клиента</a></p>
+        <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/delete" class="admin" >Удалить машину или клиента</a> </p>
+    </div>
+
+
+    <div class="mt-5">
+        <p class="d-inline-block text-dark"><u th:text="${clientName}"></u></p>
+        <a class="d-inline-block text-dark" href="/logout">Выход</a>
+    </div>
+
 </div>
 
 
-
-<a href="/logout">Выход</a>
 
 </body>
 </html>
