@@ -23,7 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().disable()
-                .authorizeRequests().anyRequest().permitAll()//antMatchers("/login", "logout", "/registration").permitAll().anyRequest().authenticated()
+                .authorizeRequests().antMatchers("/login", "logout", "/registration").
+                permitAll().anyRequest().authenticated()
                 .and().formLogin()
                 .loginPage("/login").permitAll()
                 .defaultSuccessUrl("/home")
@@ -33,12 +34,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .logoutSuccessUrl("/login");
     }
-
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(clientService).passwordEncoder(encoder);
     }
-
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return  new BCryptPasswordEncoder();

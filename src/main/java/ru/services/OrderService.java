@@ -34,13 +34,19 @@ public class OrderService {
         return statReps.findById(id).get();
     }
 
+
+
     public List<Order> getOrders() {
         log.info("Find all orders");
         return reps.findAll();
     }
 
     public Order getLastOrderByCl(Client client) {
-        return reps.getOrdersByCl(client);
+        return reps.getOrderByCl(client);
+    }
+
+    public Car getLastOrderByCar(Car car) {
+        return reps.getOrderByCar(car);
     }
 
     public void insertOrder(Order a) {

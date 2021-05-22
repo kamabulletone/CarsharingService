@@ -58,6 +58,10 @@ public class ClientService implements UserDetailsService {
         return reps.findById(id).get();
     }
 
+    public List<Client> getClientsWithNoOrders() {
+        return reps.getClientsWithNoOrders();
+    }
+
     public Client getClient(String email) {
         return reps.findByEmail(email);
     }

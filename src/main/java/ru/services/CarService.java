@@ -49,6 +49,10 @@ public class CarService {
         reps.changeCarStatus(status,id);
     }
 
+    public List<Car> getCarsWithNoOrders() {
+        return reps.getCarsWithNoOrders();
+    }
+
     public void insertCar(Car a) {
         log.info("Save item {}", a);
         reps.save(a);

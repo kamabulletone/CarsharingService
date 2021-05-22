@@ -73,6 +73,8 @@ public class MyController {
     }
 
 
+
+
     @RequestMapping(value = "/home/finishorder", method = RequestMethod.GET)
     public String finishOrderV(Model model, Principal principal) {
 
@@ -132,9 +134,11 @@ public class MyController {
 
     @RequestMapping(value = "/home/delete", method = RequestMethod.GET)
     public String getDeleteV(Model model) {
-        model.addAttribute("clients", clientService.getClients());
-        System.out.println(clientService.getClients());
-        model.addAttribute("cars", carService.getCars());
+
+
+        model.addAttribute("clients", clientService.getClientsWithNoOrders());
+
+        model.addAttribute("cars", carService.getCarsWithNoOrders());
 
 
         return "delete";
@@ -156,18 +160,6 @@ public class MyController {
 
 
 
-    @RequestMapping(value = "/home/testcars" , method = RequestMethod.GET)
-    public String testuser(Model model, Principal principal) {
-        model.addAttribute("order", new Order());
-        model.addAttribute("cars", carService.getCars());
-        System.out.println(principal.getName());
-        model.addAttribute("clientName",principal.getName());
-        Client client = clientService.getClient(principal.getName());
-        System.out.println(client);
-        // OrderDto orderDto = new OrderDto()
-        // createOrder();
-        return "test";
-    }
 
 
 
@@ -177,6 +169,8 @@ public class MyController {
 //        System.out.println(order.toString());
         Client cl = clientService.getClient(principal.getName());
         Order o = orderService.getLastOrderByCl(cl);
+        System.out.println("client=" + cl.getEmail() + " " + cl.getClientID());
+        System.out.println("order= " + o);
         Car goodCar = carService.getCar(order.getCar().getCarId());
 
         if (!goodCar.getCarStatus().equals("free")) {
