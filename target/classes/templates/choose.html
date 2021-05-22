@@ -7,8 +7,11 @@
     <title>Please sign in</title>
     <meta charset="UTF-8">
     <title>Choosing page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
-<body>
+<body >
+
+<div class="m-3">
 
     <h1>Аренда машины</h1>
     <div>
@@ -20,7 +23,7 @@
     </div>
 
     <div>
-        <table border="1">
+        <table class="table table-bordered">
             <tr>
                 <th>MARK</th>
                 <th>MODEL</th>
@@ -56,11 +59,12 @@
                 </td>
             </tr>
 
-            <tr>
-                <td><input name="Взять машину" type="submit" value="Submit" /></td>
-            </tr>
         </table>
+        <input name="Взять машину" type="submit" class="mt-2" value="Арендовать машину" />
     </form>
+
+    <a class="d-inline-block m-2 mt-5 text-dark" href="/home">Домой</a>
+</div>
 
 </body>
 </html>

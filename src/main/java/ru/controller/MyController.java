@@ -74,13 +74,22 @@ public class MyController {
 
 
     @RequestMapping(value = "/home/finishorder", method = RequestMethod.GET)
-    public String finishOrderV(Model model) {
+    public String finishOrderV(Model model, Principal principal) {
+
+        Client cl = clientService.getClient(principal.getName());
+        Order o = orderService.getLastOrderByCl(cl);
+
+        if (o == null || o.getOrderStatus().getDescription().equals("finished")) {
+            model.addAttribute("error", "Нет текущих заказов");
+            return "error";
+        }
 
         return "finishOrder";
     }
 
     @RequestMapping(value = "/home/finishorder", method = RequestMethod.POST)
     public String finishOrder(@RequestParam(value="cost", required = true) String cost, Principal principal ) {
+
         System.out.println("cost = " + cost);
 
         Client cl = clientService.getClient(principal.getName());

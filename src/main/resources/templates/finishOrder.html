@@ -54,7 +54,7 @@ $(document).ready(function(){
             minutesLabel.innerHTML = pad(parseInt(sessionStorage.totalSeconds/60));
 <!--            sessionStorage.totalSeconds = totalSeconds;-->
             sessionStorage.totalMinutes = parseInt(totalSeconds/60);
-            cost.attr("value", Number(parseFloat(cost.val()) + 0.2).toFixed(1));
+            cost.attr("value", Number(parseFloat(sessionStorage.totalSeconds) * 0.2).toFixed(1));
 <!--            console.log(cost.val());-->
         }
 
@@ -135,6 +135,7 @@ $(document).ready(function(){
 
     </div>
 
+    <p><a href="/home" class="text-dark">Домой</a> </p>
 </div>
 
 

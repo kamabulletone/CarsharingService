@@ -18,7 +18,7 @@
 
 <div>
     <p th:text="${error}"></p>
-    <a href="/home/finishorder" th:if="${error} == 'У вас есть незаверешенный заказ'">Оплатить текузий заказ</a> <br>
+    <a href="/home/finishorder" th:if="${error} == 'У вас есть незаверешенный заказ'">Оплатить текущий заказ</a> <br>
     <a href="/home" th:if="${error} != 'У вас есть незаверешенный заказ'">Домой</a> <br>
 </div>
 

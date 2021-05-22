@@ -35,7 +35,8 @@
         Домашняя страница
     </p>
     <div class="text-dark ">
-        <p><a href="/home/createorder" class="admin">Создать заказ</a></p>
+        <p><a href="/home/createorder" class="admin">Арендовать машину</a></p>
+        <p><a href="/home/finishorder" class="admin">Посмотреть текущее время и цену поездки</a></p>
         <!--    <a href="/admin/deletework" class="admin">Удалить услугу</a>-->
         <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/addcar" class="admin" >Добавить машину</a> </p>
         <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/addclient" class="admin" >Добавить клиента</a></p>
@@ -45,7 +46,7 @@
 
     <div class="mt-5">
         <p class="d-inline-block text-dark"><u th:text="${clientName}"></u></p>
-        <a class="d-inline-block text-dark" href="/logout">Выход</a>
+        <a class="d-inline-block " href="/logout">Выход</a>
     </div>
 
 </div>
