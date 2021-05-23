@@ -46,7 +46,7 @@ public class ClientService implements UserDetailsService {
 
     public List<Client> getClients() {
         List<Client> ret = reps.findAll();
-        ret.remove(0);
+//        ret.remove(0);
         return ret;
     }
 
@@ -63,7 +63,7 @@ public class ClientService implements UserDetailsService {
     }
 
     public Client getClient(String email) {
-        return reps.findByEmail(email);
+       return reps.findByEmail(email);
     }
 
     public void signUpUser(Client user) {

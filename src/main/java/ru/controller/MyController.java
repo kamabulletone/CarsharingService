@@ -29,14 +29,10 @@ public class MyController {
     @Autowired
     private OrderService orderService;
 
-//    @Autowired
-//    private UserService userService;
+
 
     @Autowired
     private ClientService clientService;
-
-    @Autowired
-    private MapService mapService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
@@ -205,6 +201,8 @@ public class MyController {
         //System.out.println(car.toString());
         return "redirect:/showcars";
     }
+
+
 
 
 }

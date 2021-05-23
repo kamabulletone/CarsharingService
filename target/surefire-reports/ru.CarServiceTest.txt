@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: ru.CarServiceTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.424 sec - in ru.CarServiceTest
+Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.44 sec <<< FAILURE! - in ru.CarServiceTest
+getCar(ru.CarServiceTest)  Time elapsed: 0.366 sec  <<< ERROR!
+java.util.NoSuchElementException: No value present
+	at ru.CarServiceTest.getCar(CarServiceTest.java:71)
+

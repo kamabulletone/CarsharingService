@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="ru.CarServiceTest" time="0.424" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="ru.CarServiceTest" time="0.44" tests="2" errors="1" skipped="0" failures="0">
   <properties>
     <property name="idea.version" value="2020.3.2"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
@@ -60,5 +60,10 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase name="getCars" classname="ru.CarServiceTest" time="0.361"/>
+  <testcase name="getCar" classname="ru.CarServiceTest" time="0.366">
+    <error message="No value present" type="java.util.NoSuchElementException">java.util.NoSuchElementException: No value present
+	at ru.CarServiceTest.getCar(CarServiceTest.java:71)
+</error>
+  </testcase>
+  <testcase name="getCarsTest" classname="ru.CarServiceTest" time="0.01"/>
 </testsuite>
