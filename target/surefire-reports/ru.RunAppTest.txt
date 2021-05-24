@@ -1,9 +1,0 @@
--------------------------------------------------------------------------------
-Test set: ru.RunAppTest
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0 sec <<< FAILURE! - in ru.RunAppTest
-initializationError(ru.RunAppTest)  Time elapsed: 0 sec  <<< ERROR!
-org.junit.runners.model.InvalidTestClassError: 
-Invalid test class 'ru.RunAppTest':
-  1. Method contextLoads() should be public
-

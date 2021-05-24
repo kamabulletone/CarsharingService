@@ -9,18 +9,102 @@
     <link rel="stylesheet" href="https://snipp.ru/cdn/chosen/1.8.7/chosen.min.css">
     <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://snipp.ru/cdn/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+    <style>
+  .error{
+    color: red;
+  }
+  label,
+  input,
+  button {
+    border: 0;
+    margin-bottom: 3px;
+    display: block;
+    width: 100%;
+  }
+ .common_box_body {
+    width: 40%;
+    padding: 15px;
+    border: 12px solid #28BAA2;
+    border-color: #28BAA2;
+    border-radius: 15px;
+    margin-top: 10px;
+    background: #d4edda;
+}
+</style>
+
 </head>
+
+<script th:inline="javascript">
+
+$(document).ready(function(){
+
+$("#newcar").validate({
+    // Specify validation rules
+    rules: {
+      RegistrationNumber: {
+        required : true,
+        pattern : "^[АВЕКМНОРСТУХ][0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{2}"
+      },
+      Mark: "required",
+      Model : "required"
+    },
+    messages: {
+
+      RegistrationNumber: {
+      required : "Введите регистрационный номер машины",
+      pattern : "Буквенные символы могут быть только - [А,В,Е,К,М,Н,О,Р,С,Т,У,Х],\n Общий вид: У199ВА78",
+     },
+     Model: {
+      required: "Введите модель машины",
+     },
+     Mark: {
+      required: "Введите марку машины",
+     },
+     Model: {
+      required: "Введите модель машины",
+     }
+    }
+
+  });
+
+});
+
+    </script>
+
 <body>
 
-<form name="Машина" action="#" id="newcar" th:action="@{/createcar}" th:object="${car}" method="post">
-    <input type="text" name="username" th:field="*{brand}" class="form-control" placeholder="Марка машины" required><br>
-    <input type="text" name="model" th:field="*{model}" class="form-control" placeholder="Модель машины" required><br>
-    <input type="text" name="technicalPassport" th:field="*{technicalPassport}" class="form-control" placeholder="Тех. паспорт" required><br>
-    <input type="text" name="stateNumber" th:field="*{stateNumber}" class="form-control" placeholder="Гос. номер" required><br>
-    <input type="text" name="year" th:field="*{year}" class="form-control" placeholder="Год выпуска машины"><br>
-    <input type="text" name="info" th:field="*{info}" class="form-control" placeholder="Доп. информация"><br>
-    <input type="submit" value="Отправить"> <br>
-</form>
+
+<div th:if="${error}">
+    <p th:text="${error}" style="color:red;"></p>
+</div>
+
+
+<div th:if="${success}">
+    <p th:text="${success}" style="color:red;"></p>
+</div>
+
+<div class="common_box_body test">
+
+    <h3> Добавление машины</h3>
+
+    <form name="Машина" action="#" id="newcar" th:action="@{/home/createcar}" th:object="${car}" method="post">
+        <input type="text" id="rn" name="RegistrationNumber" th:field="*{carRegistrationNumber}" class="form-control" placeholder="Регистрационный номер машины"><br>
+        <span id="error"></span>
+        <input type="text" name="Mark" th:field="*{carMark}" class="form-control" placeholder="Марка машины" ><br>
+        <input type="text" name="Model" th:field="*{carModel}" class="form-control" placeholder="Модель машины" ><br>
+        <input type="submit" class="btn btn-success" value="Создать"> <br>
+    </form>
+
+    <div class="mt-5">
+        <p class="d-inline-block text-dark"><u th:text="${clientName}"></u></p>
+        <a class="d-inline-block" href="/home">Домой</a>
+    </div>
+
+</div>
 
 
 </body>

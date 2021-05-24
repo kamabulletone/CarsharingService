@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @Getter
 @ToString
-@Table(name = "cars", schema = "carsharing")
+@Table(name = "cars")
 
 public class Car{
 

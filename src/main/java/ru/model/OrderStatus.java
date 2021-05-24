@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="order_status", schema = "carsharing")
+@Table(name="order_status")
 @JsonIgnoreProperties(ignoreUnknown = true,
         value = {"hibernateLazyInitializer", "handler", "created"})
 public class OrderStatus {

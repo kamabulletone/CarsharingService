@@ -19,13 +19,6 @@ $(document).ready(function(){
         var secondsLabel = document.getElementById("seconds");
         var starttime = [[${starttime}]];
         var cost = $("#cost");
-        console.log(sessionStorage.visitCount)
-<!--        if (sessionStorage.visitCount <1 ) {-->
-<!--          sessionStorage.totalSeconds = 0;-->
-<!--          sessionStorage.totalMinutes = 0;-->
-<!--            clearInterval(a);-->
-<!--            return;-->
-<!--        }-->
 
         if (sessionStorage.length !== 0 ) {
             console.log(sessionStorage.totalSeconds);
@@ -39,23 +32,15 @@ $(document).ready(function(){
 
         var totalSeconds = sessionStorage.totalSeconds;
         var a = setInterval(setTime, 1000);
-<!--        var totalSeconds = 0;-->
-<!--        setInterval(setTime, 1000);-->
-
-
 
         function setTime()
         {
             let newDate = new Date();
-<!--            console.log(newDate)-->
-<!--            console.log(Math.abs((newDate.getTime() - sessionStorage.currDate ) / 1000) )-->
             sessionStorage.totalSeconds = Math.ceil(Math.abs((newDate.getTime() - sessionStorage.currDate ) / 1000));
             secondsLabel.innerHTML = pad(sessionStorage.totalSeconds%60);
             minutesLabel.innerHTML = pad(parseInt(sessionStorage.totalSeconds/60));
-<!--            sessionStorage.totalSeconds = totalSeconds;-->
             sessionStorage.totalMinutes = parseInt(totalSeconds/60);
             cost.attr("value", Number(parseFloat(sessionStorage.totalSeconds) * 0.2).toFixed(1));
-<!--            console.log(cost.val());-->
         }
 
         function pad(val)
@@ -79,7 +64,7 @@ $(document).ready(function(){
 
         $("#submit" ).click(function() {
 
-<!--          $(window).unbind("beforeunload");-->
+
           sessionStorage.visitCount = 1;
           clearInterval(a);
           sessionStorage.clear();
@@ -90,13 +75,6 @@ $(document).ready(function(){
             e.preventDefault();
 
         });
-
-<!--        $(window).bind('beforeunload', function () {-->
-<!--            console.log("cringe")-->
-<!--        });-->
-
-
-
 
     });
 

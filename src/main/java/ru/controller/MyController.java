@@ -186,5 +186,32 @@ public class MyController {
         return "redirect:/home/finishorder";
     }
 
+    @RequestMapping(value = "/home/createcar" , method = RequestMethod.GET)
+    public String showCars(Model model) {
+
+        model.addAttribute("car", new Car());
+
+        return "addcar";
+    }
+
+    @RequestMapping(value = "/home/createcar" , method = RequestMethod.POST)
+    public String showCars(@ModelAttribute Car car,Model model) {
+
+        List<Car> cars = carService.getCars();
+
+        if (cars.stream().anyMatch(c -> c.getCarRegistrationNumber().equals(car.getCarRegistrationNumber()))) {
+            model.addAttribute("error", "Машина с таким регистрационном номером уже существует");
+            model.addAttribute("car", new Car());
+            return "addcar";
+        }
+
+        car.setCarStatus("free");
+        carService.insertCar(car);
+
+        model.addAttribute("success", "Машина успешна добавлена.");
+
+        return "addcar";
+    }
+
 
 }

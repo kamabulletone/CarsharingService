@@ -37,9 +37,9 @@
     <div class="text-dark ">
         <p><a href="/home/createorder" class="admin">Арендовать машину</a></p>
         <p><a href="/home/finishorder" class="admin">Посмотреть текущее время и цену поездки</a></p>
-        <!--    <a href="/admin/deletework" class="admin">Удалить услугу</a>-->
-        <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/addcar" class="admin" >Добавить машину</a> </p>
-<!--        <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/addclient" class="admin" >Добавить клиента</a></p>-->
+
+        <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/createcar" class="admin" >Добавить машину</a> </p>
+
         <p th:if="${role == 'ROLE_ADMIN'}"><a href="/home/delete" class="admin" >Удалить машину или клиента</a> </p>
     </div>
 

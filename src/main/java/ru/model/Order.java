@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @ToString
-@Table(name = "orders", schema = "carsharing", uniqueConstraints={@UniqueConstraint(columnNames ={"order_id", "client_id_FK",
+@Table(name = "orders", uniqueConstraints={@UniqueConstraint(columnNames ={"order_id", "client_id_FK",
         "car_id_FK","order_status_FK", "created_on"})})
 
 public class Order {

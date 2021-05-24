@@ -24,7 +24,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Setter
 @Getter
-@Table(name = "clients", schema = "carsharing")
+@Table(name = "clients")
 //@JsonIgnoreProperties(ignoreUnknown = true,
 //        value = {"hibernateLazyInitializer", "handler", "created", "FullName"})
 public class Client implements UserDetails {
