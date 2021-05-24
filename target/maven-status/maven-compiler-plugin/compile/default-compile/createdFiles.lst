@@ -1,5 +1,4 @@
 ru\controller\MyController.class
-ru\model\OrderDto.class
 ru\services\CarService.class
 ru\services\OrderService.class
 ru\model\Car.class
@@ -7,12 +6,10 @@ ru\model\Client.class
 ru\model\OrderStatus.class
 ru\model\Role.class
 ru\repositories\RoleRepository.class
-ru\services\MapService.class
 ru\configuration\SecurityConfig.class
 ru\RunApp.class
 ru\services\ClientService.class
 ru\repositories\OrderRepository.class
-ru\model\CarPk.class
 ru\model\Order.class
 ru\repositories\OrderStatusRepository.class
 ru\repositories\ClientRepository.class

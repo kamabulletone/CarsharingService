@@ -94,16 +94,6 @@ public class Client implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.ALL)
-//    @JsonBackReference
-//    private Order order;
-
-
-
-//    @Fetch(FetchMode.JOIN)
-//    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
-//    private List<Order> orders;
-
 
 
 }

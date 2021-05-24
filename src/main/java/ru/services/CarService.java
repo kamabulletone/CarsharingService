@@ -27,7 +27,7 @@ public class CarService {
     }
 
     public Car getCar(int id) {
-       // System.out.println(id.getClass().getName());
+
         return reps.findById(id).get();
     }
 

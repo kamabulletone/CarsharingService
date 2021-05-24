@@ -29,12 +29,4 @@ public class OrderStatus {
     private String description;
 
 
-
-//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "orderStatus")
-//    @JsonBackReference
-//    private Order order;
-
-
-
-
 }

@@ -68,13 +68,4 @@ public class OrderService {
         return reps.findById(orderDate).get().getCar();
     }
 
-//    public List<Order> orderByOrderDate() {
-//        log.info("Find all orders order by orderDate");
-//        return reps.findAll(Sort.by("orderDate"));
-//    }
-//
-//    public List<Order> orderByItemName() {
-//        log.info("Find all orders order by itemName");
-//        return reps.findAll(Sort.by("itemName"));
-//    }
 }

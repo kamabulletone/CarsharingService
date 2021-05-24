@@ -50,7 +50,7 @@ public class MyController {
         client.setDriverLicense("none");
         client.setFacePhoto("none");
 
-        System.out.println(client.toString());
+
 
         clientService.signUpUser(client);
 
@@ -110,7 +110,7 @@ public class MyController {
     public String deleteCar(@RequestParam(value = "cars") int[] carsId) {
         for (int carid:carsId
         ) {
-            System.out.println(carid);
+
             carService.deleteById(carid);
         }
         return "redirect:/home/delete";
@@ -121,7 +121,7 @@ public class MyController {
     public String deleteClient(@RequestParam(value = "clients") int[] clientsId) {
         for (int clientId:clientsId
         ) {
-            System.out.println(clientId);
+
             clientService.deleteById(clientId);
         }
         return "redirect:/home/delete";
@@ -145,28 +145,21 @@ public class MyController {
     public String showCars(Model model, Principal principal) {
         model.addAttribute("order", new Order());
         model.addAttribute("cars", carService.getCars());
-        System.out.println(principal.getName());
+
         model.addAttribute("clientName",principal.getName());
         Client client = clientService.getClient(principal.getName());
-        System.out.println(client);
-        // OrderDto orderDto = new OrderDto()
-        // createOrder();
+
+
         return "choose";
     }
-
-
-
-
 
 
     @RequestMapping(value = "/home/createorder" , method = RequestMethod.POST)
     public String showCars(@ModelAttribute Order order, Principal principal, Model model) {
 
-//        System.out.println(order.toString());
         Client cl = clientService.getClient(principal.getName());
         Order o = orderService.getLastOrderByCl(cl);
-        System.out.println("client=" + cl.getEmail() + " " + cl.getClientID());
-        System.out.println("order= " + o);
+
         Car goodCar = carService.getCar(order.getCar().getCarId());
 
         if (!goodCar.getCarStatus().equals("free")) {
@@ -192,17 +185,6 @@ public class MyController {
 
         return "redirect:/home/finishorder";
     }
-
-
-    @RequestMapping(value = "/showselectedcar", method = RequestMethod.POST)
-    public String showCarsSubmit(@RequestParam(value = "carId", required = true) int carId) {
-        System.out.println(carId);
-
-        //System.out.println(car.toString());
-        return "redirect:/showcars";
-    }
-
-
 
 
 }

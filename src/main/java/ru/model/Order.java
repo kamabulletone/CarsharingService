@@ -19,8 +19,6 @@ import java.time.LocalDateTime;
 @ToString
 @Table(name = "orders", schema = "carsharing", uniqueConstraints={@UniqueConstraint(columnNames ={"order_id", "client_id_FK",
         "car_id_FK","order_status_FK", "created_on"})})
-//@JsonIgnoreProperties(ignoreUnknown = true,
-//        value = {"hibernateLazyInitializer", "handler", "created"})
 
 public class Order {
 

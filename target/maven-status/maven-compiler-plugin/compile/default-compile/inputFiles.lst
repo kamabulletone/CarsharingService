@@ -1,13 +1,10 @@
-D:\CarsharingService\src\main\java\ru\services\MapService.java
 D:\CarsharingService\src\main\java\ru\model\Client.java
 D:\CarsharingService\src\main\java\ru\repositories\OrderRepository.java
 D:\CarsharingService\src\main\java\ru\services\CarService.java
 D:\CarsharingService\src\main\java\ru\services\ClientService.java
 D:\CarsharingService\src\main\java\ru\model\OrderStatus.java
 D:\CarsharingService\src\main\java\ru\repositories\CarRepository.java
-D:\CarsharingService\src\main\java\ru\model\OrderDto.java
 D:\CarsharingService\src\main\java\ru\model\Role.java
-D:\CarsharingService\src\main\java\ru\model\CarPk.java
 D:\CarsharingService\src\main\java\ru\repositories\RoleRepository.java
 D:\CarsharingService\src\main\java\ru\configuration\SecurityConfig.java
 D:\CarsharingService\src\main\java\ru\controller\MyController.java

@@ -18,10 +18,8 @@ import java.util.List;
 @Setter
 @Getter
 @ToString
-//@JsonIgnoreProperties(ignoreUnknown = true,
-//        value = {"hibernateLazyInitializer", "handler", "created"})
 @Table(name = "cars", schema = "carsharing")
-//@IdClass(CarPk.class)
+
 public class Car{
 
     @Id
@@ -29,7 +27,7 @@ public class Car{
     @Column(name = "car_id", updatable = false, nullable = false)
     private int carId;
 
-    //@Id
+
     @Column(name = "car_registr_num", unique = true, updatable = false)
     private String carRegistrationNumber;
 
@@ -41,12 +39,5 @@ public class Car{
 
     @Column(name = "car_status")
     private String carStatus;
-
-//    @JsonBackReference
-//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "car", cascade = CascadeType.ALL)
-//    private Order order;
-
-
-
 
 }
