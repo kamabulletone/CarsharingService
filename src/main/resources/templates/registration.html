@@ -7,9 +7,14 @@
     <meta name="description" content>
     <meta name="author" content>
     <title>Please sign in</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
     <script >
 
     $(function() {
@@ -35,45 +40,121 @@
     })
 
 
+
+
+
     </script>
 
 </head>
 <body>
 <div class="container">
-    <form class="form-signin" role="form" th:action="@{/registration}" th:method="post" th:object="${client}">
-        <h2 class="form-signin-heading">Please sign up</h2>
-        <p>
+    <form class="form-signin needs-validation" novalidate role="form" th:action="@{/registration}" th:method="post" th:object="${client}">
+        <h2 class="form-signin-heading">Регистрация</h2>
+        <div class="form-group">
             <label for="email" class="sr-only">Name</label>
-            <input type="email" id="email" name="email" th:field="*{email}" class="form-control" placeholder="email" required autofocus>
-        </p>
-        <p>
+            <input type="email" id="email" name="email" th:field="*{email}" class="form-control" placeholder="Электронная почта" required autofocus>
+            <div class="invalid-feedback">
+                Введите свою электронную почту. Пример: ivanov@yandex.ru
+            </div>
+        </div>
+        <div class="form-group">
             <label for="fullname" class="sr-only">Name</label>
-            <input type="text" id="fullname" name="fullname" th:field="*{FullName}" class="form-control" placeholder="FullName" required autofocus>
-        </p>
-        <p>
+            <input type="text" id="fullname" name="fullname" th:field="*{FullName}" class="form-control" placeholder="ФИО" required autofocus>
+            <div class="invalid-feedback">
+                Введите ФИО. Пример: Иванов Иван Иваныч
+            </div>
+        </div>
+        <div class="form-group">
             <label for="passport" class="sr-only">Name</label>
-            <input type="text" id="passport" name="passport" th:field="*{passport}" class="form-control" placeholder="passport" required autofocus>
-        </p>
-        <p>
+            <input type="text" id="passport" name="passport" th:field="*{passport}" class="form-control form-control-sm my-1" pattern="\d\d\d\d-\d\d\d\d\d\d" placeholder="Паспорт" required autofocus>
+            <div class="invalid-feedback">
+                Введите данные паспорта. Пример 1234-567890
+            </div>
+        </div>
+        <div class="form-group">
             <label for="phoneNumber" class="sr-only">Name</label>
-            <input type="text" id="phoneNumber" name="phoneNumber" th:field="*{phoneNumber}" class="form-control" placeholder="phoneNumber" required autofocus>
-        </p>
-        <p>
+            <input type="text" id="phoneNumber" name="phoneNumber" th:field="*{phoneNumber}" class="form-control form-control-sm my-1" value="+7(___)___-__-__" pattern="\+7\(\d\d\d\)\d\d\d-\d\d-\d\d"
+                   placeholder="+7(___)___-__-__" required autofocus>
+            <div class="invalid-feedback">
+                Введите свой номер телефеона. Пример +7(915)666-13-17
+            </div>
+        </div>
+        <div class="form-group">
             <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" name="password" th:field="*{password}" class="form-control" placeholder="Password" required>
-        </p>
-        <p>
+            <input type="password" id="password" name="password" th:field="*{password}" class="form-control" placeholder="Пароль" required>
+        </div>
+        <div class="form-group">
             <label for="password" class="sr-only">Confirm Password</label>
-            <input type="password" id="passwordConfirm" name="passwordConfirm" class="form-control" placeholder="Confirm Password" required>
+            <input type="password" id="passwordConfirm" name="passwordConfirm" class="form-control" placeholder="Подтверждение пароля" required>
 
-        </p>
+        </div>
 
         <div class="error"></div>
 
-        <button name="Submit" type="submit" value="submit" id="submit" class="btn btn-lg btn-primary btn-block mx-auto" style="width: 45%">Sign up</button>
+
+        <button name="Submit" type="submit" value="submit" id="submit" class="btn btn-lg btn-primary btn-block mx-auto">Зарегистрироваться</button>
+        <a href="/login" id="reg" class="d-block btn btn-lg btn-primary btn-block" role="button">Авторизоваться</a>
 
     </form>
 
+    <script>
+
+        function setCursorPosition(pos, e) {
+e.focus();
+if (e.setSelectionRange) e.setSelectionRange(pos, pos);
+else if (e.createTextRange) {
+var range = e.createTextRange();
+range.collapse(true);
+range.moveEnd("character", pos);
+range.moveStart("character", pos);
+range.select()
+}
+}
+
+function mask(e) {
+//console.log('mask',e);
+var matrix = this.placeholder,// .defaultValue
+i = 0,
+def = matrix.replace(/\D/g, ""),
+val = this.value.replace(/\D/g, "");
+def.length >= val.length && (val = def);
+matrix = matrix.replace(/[_\d]/g, function(a) {
+return val.charAt(i++) || "_"
+});
+this.value = matrix;
+i = matrix.lastIndexOf(val.substr(-1));
+i < matrix.length && matrix != this.placeholder ? i++ : i = matrix.indexOf("_");
+setCursorPosition(i, this)
+}
+window.addEventListener("DOMContentLoaded", function() {
+var input = document.querySelector("#phoneNumber");
+input.addEventListener("input", mask, false);
+input.focus();
+setCursorPosition(3, input);
+});
+
+
+        (function () {
+  'use strict'
+
+  // Получите все формы, к которым мы хотим применить пользовательские стили проверки Bootstrap
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Зацикливайтесь на них и предотвращайте отправку
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+
+  </script>
 
 </div>
 </body>

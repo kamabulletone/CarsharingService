@@ -13,7 +13,7 @@ INSERT INTO order_status(description)
 values ('in process'),
        ('finished'),
        ('payed')
-ON CONFLICT (id)
+ON CONFLICT (id,description)
 DO UPDATE SET description = excluded.description;
 
 

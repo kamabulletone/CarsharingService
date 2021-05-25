@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <title>Choosing page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 </head>
 <body >
 
@@ -42,12 +43,12 @@
 
 
 
-    <form name='f' action="#" th:action="@{/home/createorder}" method='POST' th:object="${order}">
+    <form name='f' class="was-validated" action="#" th:action="@{/home/createorder}" method='POST' th:object="${order}">
         <table>
             <tr>
                 <td>Select car:</td>
                 <td>
-                    <select name="car" id="car" th:field="*{car}">
+                    <select class="selectpicker form-select" name="car" id="car" th:field="*{car}" data-live-search="true"  required>
                         <option value=""> -- </option>
                         <option th:each="car : ${cars}" th:if="${car.carStatus == 'free'}"
                                 th:value="${car.carId}"
@@ -60,11 +61,20 @@
             </tr>
 
         </table>
-        <input name="Взять машину" type="submit" class="mt-2" value="Арендовать машину" />
+        <input name="Взять машину" type="submit" class="mt-2 btn btn-primary" value="Арендовать машину" />
     </form>
 
     <a class="d-inline-block m-2 mt-5 text-dark" href="/home">Домой</a>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+<script>
+$(document).ready(function(){
+    $('#car').selectpicker({noneSelectedText: 'Выберите машину'});
+});
+</script>
+
 
 </body>
 </html>

@@ -183,8 +183,9 @@
     <div class="container ml-2">
         <form class="form-signin" role="form" th:action="@{/home/deletecar}" th:method="post">
 
-            <select class="js-chosen" multiple="true" name="car" id="car" required th:name="cars" >
-                <option  value=""></option>
+            <select class="js-chosen" multiple="true" name="car" id="car" required th:name="cars">
+                <option  value="Нет машин">
+                <option  value="Выберите машину"></option>
                 <option th:each="car: ${cars}" th:value="${car.carId}" th:text="|${car.carId} ${car.carRegistrationNumber}|">
                 </option>
             </select> <br>

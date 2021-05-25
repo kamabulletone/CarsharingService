@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.model.*;
 import ru.services.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -195,9 +196,15 @@ public class MyController {
     }
 
     @RequestMapping(value = "/home/createcar" , method = RequestMethod.POST)
-    public String showCars(@ModelAttribute Car car,Model model) {
+    public String showCars(@ModelAttribute Car car, Model model) {
 
         List<Car> cars = carService.getCars();
+
+
+        if (car.getCarMark().equals("") || car.getCarRegistrationNumber().equals("") || car.getCarModel().equals("")) {
+            model.addAttribute("error", "Не все поля заполнены");
+            return "addcar";
+        }
 
         if (cars.stream().anyMatch(c -> c.getCarRegistrationNumber().equals(car.getCarRegistrationNumber()))) {
             model.addAttribute("error", "Машина с таким регистрационном номером уже существует");

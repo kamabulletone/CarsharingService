@@ -29,18 +29,18 @@ $(document).ready(function() {
 
 <div class="container ">
     <form class="form-signin" role="form" th:action="@{/login}" th:method="post">
-        <h2 class="form-signin-heading">Please sign in</h2>
+        <h2 class="form-signin-heading">Авторизация</h2>
         <p>
             <label for="email" class="sr-only">Username</label>
-            <input type="text" id="email" name="username" class="form-control" placeholder="Email" required autofocus>
+            <input type="text" id="email" name="username" class="form-control" placeholder="Электронная почта" required autofocus>
 
         </p>
         <p>
             <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Пароль" required>
         </p>
-        <button class="btn btn-lg btn-primary btn-block mb-2" id="log" type="submit">Sign in</button>
-        <a href="/registration" id="reg" class="btn btn-lg btn-primary btn-block" role="button">Sign up</a>
+        <button class="btn btn-lg btn-primary btn-block mb-2" id="log" type="submit">Авторизоваться</button>
+        <a href="/registration" id="reg" class="btn btn-lg btn-primary btn-block" role="button">Зарегистрироваться</a>
     </form>
 
 

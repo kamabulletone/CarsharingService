@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://snipp.ru/cdn/chosen/1.8.7/chosen.min.css">
     <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://snipp.ru/cdn/chosen/1.8.7/chosen.jquery.min.js"></script>
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
     <script th:inline="javascript">
 
 $(document).ready(function(){
@@ -89,9 +89,10 @@ $(document).ready(function(){
 <body>
 
 <div>
-    <h1>Завершение заказа</h1>
 
-    <div class="container">
+
+    <div class="container1 mx-3 my-3">
+        <h1>Завершение заказа</h1>
         <form class="form-signin" id="form" role="form" th:action="@{/home/finishorder}" th:method="post">
 
             <div class="timer">
@@ -107,13 +108,13 @@ $(document).ready(function(){
                 <input type="text" th:name="cost" id="cost" th:value="1" readonly>
             </div>
 
-            <input type="submit" name="Завершить" id="submit">
+            <input type="submit" class="btn btn-primary my-1" name="Завершить" id="submit">
         </form>
-        <button id="stop">Отстановить</button>
-
+<!--        <button id="stop" class="btn btn-secondary my-1">Отстановить</button>-->
+        <p><a href="/home" class="text-dark">Домой</a> </p>
     </div>
 
-    <p><a href="/home" class="text-dark">Домой</a> </p>
+
 </div>
 
 
