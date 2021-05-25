@@ -1,0 +1,20 @@
+  .error{
+    color: red;
+  }
+  label,
+  input,
+  button {
+    border: 0;
+    margin-bottom: 3px;
+    display: block;
+    width: 100%;
+  }
+ .common_box_body {
+    width: 40%;
+    padding: 15px;
+    border: 12px solid #28BAA2;
+    border-color: #28BAA2;
+    border-radius: 15px;
+    margin-top: 10px;
+    background: #d4edda;
+}

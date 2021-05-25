@@ -15,56 +15,14 @@
 <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js"></script>-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-
-    <style>
-  .error{
-    color: red;
-  }
-  label,
-  input,
-  button {
-    border: 0;
-    margin-bottom: 3px;
-    display: block;
-    width: 100%;
-  }
- .common_box_body {
-    width: 40%;
-    padding: 15px;
-    border: 12px solid #28BAA2;
-    border-color: #28BAA2;
-    border-radius: 15px;
-    margin-top: 10px;
-    background: #d4edda;
-}
-</style>
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <script th:inline="javascript" type="text/javascript" th:src="@{/js/validation.js}"></script>
 
 </head>
 
-<script th:inline="javascript">
+<!--<script th:inline="javascript">-->
 
-$(document).ready(function(){
 
-// Пример стартового JavaScript для отключения отправки форм при наличии недопустимых полей
-(function () {
-  'use strict'
-
-  // Получите все формы, к которым мы хотим применить пользовательские стили проверки Bootstrap
-  var forms = document.querySelectorAll('.needs-validation')
-
-  // Зацикливайтесь на них и предотвращайте отправку
-  Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-      form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
-
-        form.classList.add('was-validated')
-      }, false)
-    })
-})()
 <!--$("#ncar").validate({-->
 
 <!--    // Specify validation rules-->
@@ -95,9 +53,8 @@ $(document).ready(function(){
 
 <!--  });-->
 
-});
 
-</script>
+<!--</script>-->
 
 <body>
 
