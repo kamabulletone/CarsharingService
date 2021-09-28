@@ -19,12 +19,21 @@ import javax.persistence.*;
 @Table(name="order_status")
 @JsonIgnoreProperties(ignoreUnknown = true,
         value = {"hibernateLazyInitializer", "handler", "created"})
+/**
+ * Класс, реализующий сущность статуса заказа
+ */
 public class OrderStatus {
+    /**
+     * Идентификатор статуса
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
 
+    /**
+     * описание статуса
+     */
     @Column(name="description", unique = true)
     private String description;
 

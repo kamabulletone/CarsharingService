@@ -18,35 +18,57 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+/**
+ * Класс, обрабатывающий операции на веб-ресурсе
+ */
 @Controller
 @AllArgsConstructor
 public class MyController {
 
 
-
+    /**
+     * Сервис, рабатающий с сущностью машин
+     */
     @Autowired
     private CarService carService;
 
+    /**
+     * Сервис, работающий с сущностью заказов
+     */
     @Autowired
     private OrderService orderService;
 
-
-
+    /**
+     * Сервис, работающий с сущностью клиентов
+     */
     @Autowired
     private ClientService clientService;
 
+    /**
+     * Метод вывода страницы авторизации
+     * @return страница для авторизации пользователя
+     */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
         return "login";
     }
 
+    /**
+     * Метод возвращающий страницу регистрации
+     * @param model Объект для записи информации на страницу веб-ресурса
+     * @return страница регистрации
+     */
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
         model.addAttribute("client", new Client());
         return "registration";
     }
 
+    /**
+     * Метод, регистрирующий пользователя и перенаправляющий на странцу авторизации
+     * @param client Объект клиента, связанный с контекстой переменной thymeleaf
+     * @return страница авторизации
+     */
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     String signUp(@ModelAttribute Client client) {
         client.setDriverLicense("none");
@@ -59,6 +81,12 @@ public class MyController {
         return "redirect:/login";
     }
 
+    /**
+     * Метод, возвращающий домашнюю страницу для юзера и другую для админа
+     * @param model Объект для записи информации на страницу веб-ресурса
+     * @param principal Объект, содержащий информацию о залогиненном пользователе
+     * @return домашняя страница
+     */
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     String showhome(Model model, Principal principal) {
 
@@ -71,8 +99,13 @@ public class MyController {
     }
 
 
-
-
+    /**
+     * Метод, возвращающий страницу завершения заказа, на странице идет подсчет цены заказа
+     * В случае того, если заказов нет или все в завершены, то вернуть страницу ошибки
+     * @param model Объект для записи информации на страницу веб-ресурса
+     * @param principal Объект, содержащий информацию о залогиненном пользователе
+     * @return страница завершения заказа или ошибка
+     */
     @RequestMapping(value = "/home/finishorder", method = RequestMethod.GET)
     public String finishOrderV(Model model, Principal principal) {
 
@@ -87,6 +120,12 @@ public class MyController {
         return "finishOrder";
     }
 
+    /**
+     * Метод, заверщающий заказ(переводит в состояние "finished") и переводящий использованную машину в состояние "free"
+     * @param cost сгенерированная цена заказа
+     * @param principal Объект, содержащий информацию о залогиненном пользователе
+     * @return домашняя страница
+     */
     @RequestMapping(value = "/home/finishorder", method = RequestMethod.POST)
     public String finishOrder(@RequestParam(value="cost", required = true) String cost, Principal principal ) {
 
@@ -106,8 +145,11 @@ public class MyController {
 
     }
 
-
-
+    /**
+     * Метод, удаляющий машину/ы, доступно только у админа
+     * @param carsId Массив id машин
+     * @return страница удаления
+     */
     @RequestMapping(value = "/home/deletecar", method = RequestMethod.POST)
     public String deleteCar(@RequestParam(value = "cars") int[] carsId) {
         for (int carid:carsId
@@ -119,6 +161,11 @@ public class MyController {
 
     }
 
+    /**
+     * Метод, удаляющий клиента/ов, доступно только у админа
+     * @param clientsId массив id клиентов
+     * @return страница удаления
+     */
     @RequestMapping(value = "/home/deleteclient", method = RequestMethod.POST)
     public String deleteClient(@RequestParam(value = "clients") int[] clientsId) {
         for (int clientId:clientsId
@@ -130,6 +177,11 @@ public class MyController {
 
     }
 
+    /**
+     * Метод, возвращающий страницу с клиентами и машинами без заказов
+     * @param model Объект для записи информации на страницу веб-ресурса
+     * @return страница удаления
+     */
     @RequestMapping(value = "/home/delete", method = RequestMethod.GET)
     public String getDeleteV(Model model) {
 
@@ -143,6 +195,12 @@ public class MyController {
 
     }
 
+    /**
+     * Метод, возвращающий страницу для создания заказа
+     * @param model Объект для записи информации на страницу веб-ресурса
+     * @param principal Объект, содержащий информацию о залогиненном пользователе
+     * @return страница создания заказа
+     */
     @RequestMapping(value = "/home/createorder" , method = RequestMethod.GET)
     public String showCars(Model model, Principal principal) {
         model.addAttribute("order", new Order());
@@ -155,7 +213,15 @@ public class MyController {
         return "choose";
     }
 
-
+    /**
+     * Методу, создающий заказ со статусом in process и переводит машину в статус in use
+     * В методе проверяется используется ли уже выбранная машина
+     * Также есть ли у клиента исптория заказов и/или незавершенные заказы
+     * @param order Объект заказа, связанный с контекстной переменной thymeleaf
+     * @param principal Объект, содержащий информацию о залогиненном пользователе
+     * @param model Объект для записи информации на страницу веб-ресурса
+     * @return страница завершения заказа или страница создания заказа или ошибка
+     */
     @RequestMapping(value = "/home/createorder" , method = RequestMethod.POST)
     public String showCars(@ModelAttribute Order order, Principal principal, Model model) {
 
@@ -184,10 +250,14 @@ public class MyController {
             return "error";
         }
 
-
         return "redirect:/home/finishorder";
     }
 
+    /**
+     * Метод, возвращающий странцу создания машины, только для админа
+     * @param model Объект для записи информации на страницу веб-ресурса
+     * @return страница создания машины
+     */
     @RequestMapping(value = "/home/createcar" , method = RequestMethod.GET)
     public String showCars(Model model) {
 
@@ -196,6 +266,13 @@ public class MyController {
         return "addcar";
     }
 
+    /**
+     * Метод, создающий машину со статусом free(свободна)
+     * Проверятеся все ли поля заполнены, существует ли уже такая машина
+     * @param car Объект машины, связанный с контекстной переменной thymeleaf
+     * @param model Объект для записи информации на страницу веб-ресурса
+     * @return странца создания машины
+     */
     @RequestMapping(value = "/home/createcar" , method = RequestMethod.POST)
     public String showCars(@ModelAttribute Car car, Model model) {
 

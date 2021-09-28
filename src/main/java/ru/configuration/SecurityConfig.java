@@ -11,15 +11,30 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.services.ClientService;
 
 
+/**
+ * Класс, отвечающий за безопасность и авторизацию
+ */
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    /**
+     * Сервис работы с пользователем.
+     */
     @Autowired
     private ClientService clientService;
 
+    /**
+     * Объект отвечающий за кодирование пароля.
+     */
     @Autowired
     private BCryptPasswordEncoder encoder;
 
+    /**
+     * Метод настройки безопасности и информации о пользователях.
+     * @param http Объект для настройки веб-безопасности для определенных HTTP-запросов.
+     * @throws Exception Класс, отвечающий за обнаружение ошибок.
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().disable()
@@ -34,6 +49,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .logoutSuccessUrl("/login");
     }
+
+    /**
+     * Методов для аутентификации пользователя.
+     * @param auth Объект для настройки веб-безопасности для определенных HTTP-запросов.
+     * @throws Exception -  Класс, отвечающий за обнаружение ошибок.
+     */
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(clientService).passwordEncoder(encoder);

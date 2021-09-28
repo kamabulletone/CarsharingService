@@ -10,6 +10,11 @@ import ru.model.Client;
 import java.util.List;
 
 
+/**
+ * Интерфейс реализующий работу с репозиторием машины.
+ * А именно: изменение статуса машины по id машины и id заказа,
+ * получение списка машин без заказаов.
+ */
 public interface CarRepository extends JpaRepository<Car, Integer> {
 
     @Modifying

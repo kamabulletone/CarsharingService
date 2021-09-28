@@ -7,6 +7,11 @@ import ru.model.Order;
 
 import java.util.List;
 
+/**
+ * Интерфейс реализующий работу с репозиторием клиента.
+ * А именно: поиск клиента по электронной почте,
+ * получение списка пользователей без заказаов.
+ */
 public interface ClientRepository extends JpaRepository<Client, Integer> {
 
     public Client findByEmail(String email);

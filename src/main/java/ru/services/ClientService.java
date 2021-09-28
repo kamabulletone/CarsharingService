@@ -50,22 +50,43 @@ public class ClientService implements UserDetailsService {
         return ret;
     }
 
+    /**
+     * Метод удаления клиента
+     * @param id идентификатор клиента
+     */
     public void deleteById(int id) {
         reps.delete(getClient(id));
     }
 
+    /**
+     * Метод получения клиента по id
+     * @param id идентификатор клиента
+     * @return объект клиента
+     */
     public Client getClient(int id) {
         return reps.findById(id).get();
     }
 
+    /**
+     * Метод получения списка всех клиентов без заказов
+     * @return список клиентов без заказов
+     */
     public List<Client> getClientsWithNoOrders() {
         return reps.getClientsWithNoOrders();
     }
 
+    /**
+     * Метод получения клиента по адресу электронной почты
+     * @param email электронная почта клиента
+     * @return объект клиента
+     */
     public Client getClient(String email) {
        return reps.findByEmail(email);
     }
 
+    /**
+     * Метод регистрации клиента
+     */
     public void signUpUser(Client user) {
 
         user.setRoles(Collections.singleton(new Role(1, "ROLE_USER")));
@@ -79,7 +100,12 @@ public class ClientService implements UserDetailsService {
         }
     }
 
-
+    /**
+     * Метод загрузки пользователя по имени.
+     * @param s Имя пользователя.
+     * @return Вернуть объект пользователя.
+     * @throws UsernameNotFoundException Класс, проверяющий подлинность при помощи имени пользователя.
+     */
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 

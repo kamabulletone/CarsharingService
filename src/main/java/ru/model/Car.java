@@ -25,29 +25,40 @@ import java.util.List;
 @ToString
 @Validated
 @Table(name = "cars")
-
+/**
+ * Класс, реализующий сущность машины
+ */
 public class Car{
 
+    /**
+     * Идентификатор машины
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "car_id", updatable = false, nullable = false)
     private int carId;
 
-
+    /**
+     * Регистрационный номер машины
+     */
     @Column(name = "car_registr_num", unique = true, updatable = false)
-//    @Pattern(regexp = "^[АВЕКМНОРСТУХ][0-9]{3}[АВЕКМНОРСТУХ]{2}[0-9]{2}",message = "Буквенные символы могут быть только - [А,В,Е,К,М,Н,О,Р,С,Т,У,Х],\n Общий вид: У199ВА78")
-//    @NotBlank(message = "Введите регистрационный номер")
     private String carRegistrationNumber;
 
-//    @NotBlank(message = "Введите регистрационный номер")
+    /**
+     * Марка машины
+     */
     @Column(name = "car_mark")
     private String carMark;
 
-//    @NotBlank(message = "Введите регистрационный номер")
+    /**
+     * Модель машины
+     */
     @Column(name = "car_model")
     private String carModel;
 
-//    @NotBlank(message = "Введите регистрационный номер")
+    /**
+     * Статус машины
+     */
     @Column(name = "car_status")
     private String carStatus;
 

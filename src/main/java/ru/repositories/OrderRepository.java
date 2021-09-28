@@ -8,7 +8,11 @@ import ru.model.Client;
 import ru.model.Order;
 import ru.model.OrderStatus;
 
-
+/**
+ * Интерфейс реализующий работу с репозиторием заказов.
+ * А именно: получение последнего заказа по обеъекту клиента, получение последнего заказа по машине
+ * изменение статуса заказа по объеку статуса заказа и id заказа.
+ */
 public interface OrderRepository extends JpaRepository<Order, String> {
 
 
