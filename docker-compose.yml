@@ -7,7 +7,7 @@ services:
             POSTGRES_DB: db
             POSTGRES_PASSWORD: root
         ports:
-            - '3301:3306'
+            - '5431:5432'
         restart: always
     spring_db:
         build: .
