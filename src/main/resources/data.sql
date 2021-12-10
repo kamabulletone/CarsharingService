@@ -23,7 +23,10 @@ ON DUPLICATE KEY UPDATE description = values(description);
 INSERT INTO carsharing.cars(car_registr_num, car_mark, car_model, car_status)
 values ('У199УХ99', 'Toyota', 'Kamri', 'free'),
        ('А199ТА98', 'Mercedes', 'Benz', 'free'),
-       ('У177УМ48', 'KIA', 'RIO', 'free')
+       ('У177УМ48', 'KIA', 'RIO', 'free'),
+       ('O524HK99','KIA','CX-9','free'),
+       ('C344CC99','Mazda','Sportage','free'),
+       ('K199XA177','Mazda','RX-8','free')
 ON DUPLICATE KEY UPDATE car_registr_num = values(car_registr_num),
                         car_mark = values(car_mark), car_model=values(car_model),
                         car_status = values(car_status);

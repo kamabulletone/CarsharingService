@@ -10,6 +10,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 </head>
+<style>
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  color: black;
+}
+</style>
 <body >
 
 <div class="m-3">
@@ -47,6 +55,36 @@
         <input name="Взять машину" type="submit" class="mt-2 btn btn-primary" value="Арендовать машину" />
     </form>
 
+    <a th:href="@{/home/createorder(page=${page-1})}"
+       th:classappend="${{page - 1 < 0}}? 'disabled'">Предыдущая страница</a>
+    <a th:href="@{/home/createorder(page=${page+1})}"
+       th:classappend="${page + 1 > totalPages}? 'disabled'">Следующая страница</a>
+
+<!--    <form name='f' class="was-validated" action="#" th:action="@{/home/createorder}" method='get' th:object="${carFilter}">-->
+<!--        <select class="selectpicker form-select"  th:field="*{carMark}" data-live-search="true">-->
+<!--            <option value=""> &#45;&#45; </option>-->
+<!--            <option value="Mercedes">Mercedes</option>-->
+<!--            <option value="KIA">KIA</option>-->
+<!--            <option value="Lada">Lada</option>-->
+<!--            <option value="Mazda">Mazda</option>-->
+<!--        </select>-->
+<!--        <select class="selectpicker form-select"  th:field="*{carModel}" data-live-search="true">-->
+<!--            <option value=""> &#45;&#45; </option>-->
+<!--            <option value="Kamri">Kamri</option>-->
+<!--            <option value="Benz">Benz</option>-->
+<!--            <option value="RIO">RIO</option>-->
+<!--            <option value="Sedan">Sedan</option>-->
+<!--            <option value="CX-9">CX-9</option>-->
+<!--            <option value="Sportage">Sportage</option>-->
+<!--            <option value="Ceed">Ceed</option>-->
+<!--            <option value="Sorento">Sorento</option>-->
+<!--            <option value="RX-8">RX-8</option>-->
+<!--        </select>-->
+<!--        <input type="submit" class="mt-2 btn btn-primary" th:text="amogus"/>-->
+<!--    </form>-->
+
+
+
 
     <div class="mt-3">
         <table class="table table-bordered">
@@ -56,7 +94,7 @@
                 <th>REG_NUM</th>
                 <th>STATUS</th>
             </tr>
-            <tr th:each = "car,stat : ${cars}" th:if="${car.carStatus == 'free' && stat.index < 4}">
+            <tr th:each = "car,stat : ${cars}" th:if="${car.carStatus == 'free' && stat.index < pageSize}">
                 <td th:text="${car.carMark}"> </td>
                 <td th:text="${car.carModel}"> </td>
                 <td th:text="${car.carRegistrationNumber}"> </td>
@@ -73,10 +111,47 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-<script>
+
+<script th:inline="javascript">
+    if (sessionStorage.length !== 0 ) {
+        console.log(sessionStorage.totalSeconds);
+    } else {
+      sessionStorage.currentPage = 0;
+      sessionStorage.totalMinutes = 0;
+      var now = new Date();
+      sessionStorage.currDate = now.getTime();
+
+    }
+
+    var totalSeconds = sessionStorage.totalSeconds;
+    var a = setInterval(setTime, 1000);
+
+    function setTime()
+    {
+        let newDate = new Date();
+        sessionStorage.totalSeconds = Math.ceil(Math.abs((newDate.getTime() - sessionStorage.currDate ) / 1000));
+        secondsLabel.innerHTML = pad(sessionStorage.totalSeconds%60);
+        minutesLabel.innerHTML = pad(parseInt(sessionStorage.totalSeconds/60));
+        sessionStorage.totalMinutes = parseInt(totalSeconds/60);
+        cost.attr("value", Number(parseFloat(sessionStorage.totalSeconds) * 0.2).toFixed(1));
+    }
+
 $(document).ready(function(){
     $('#car').selectpicker({noneSelectedText: 'Выберите машину'});
 });
+
+function incrementPage() {
+    console.log("pitsa")
+<!--    const Http = new XMLHttpRequest();-->
+<!--    const url='http://localhost:8085/home/createorder?page=' + [[${page}]] + 1;-->
+<!--    Http.open("GET", url);-->
+<!--    Http.send();-->
+}
+
+<!--$( "#other" ).click(function() {-->
+<!--  -->
+<!--});-->
+
 </script>
 
 

@@ -4,11 +4,16 @@ package ru.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.Filters.CarFilter;
 import ru.model.*;
 import ru.services.*;
 
@@ -202,9 +207,21 @@ public class MyController {
      * @return страница создания заказа
      */
     @RequestMapping(value = "/home/createorder" , method = RequestMethod.GET)
-    public String showCars(Model model, Principal principal) {
+    public String showCars(Model model, Principal principal, CarFilter filter,
+                           @RequestParam(defaultValue = "0") int page,
+                           @RequestParam(defaultValue = "5") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Car> cars = carService.getCars(filter,pageable);
+
+        System.out.println(cars.getContent());
+        System.out.println(page);
+
         model.addAttribute("order", new Order());
-        model.addAttribute("cars", carService.getCars());
+        model.addAttribute("cars", cars.getContent());
+        model.addAttribute("page", page);
+        model.addAttribute("totalPages", cars.getTotalPages());
+        model.addAttribute("pageSize", size);
 
         model.addAttribute("clientName",principal.getName());
         Client client = clientService.getClient(principal.getName());
@@ -223,17 +240,25 @@ public class MyController {
      * @return страница завершения заказа или страница создания заказа или ошибка
      */
     @RequestMapping(value = "/home/createorder" , method = RequestMethod.POST)
-    public String showCars(@ModelAttribute Order order, Principal principal, Model model) {
+    public String showCars(@ModelAttribute Order order, Principal principal, Model model,CarFilter filter,
+                           @RequestParam(defaultValue = "0") int page,
+                           @RequestParam(defaultValue = "5") int size) {
 
         Client cl = clientService.getClient(principal.getName());
         Order o = orderService.getLastOrderByCl(cl);
 
         Car goodCar = carService.getCar(order.getCar().getCarId());
 
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Car> cars = carService.getCars(filter,pageable);
+
         if (!goodCar.getCarStatus().equals("free")) {
             model.addAttribute("error", "Машина уже используется");
             model.addAttribute("order", new Order());
-            model.addAttribute("cars", carService.getCars());
+            model.addAttribute("cars", cars.getContent());
+            model.addAttribute("page", page);
+            model.addAttribute("pageSize", size);
+            model.addAttribute("totalPages", cars.getTotalPages());
             model.addAttribute("clientName",principal.getName());
             return "choose";
         }
@@ -274,9 +299,13 @@ public class MyController {
      * @return странца создания машины
      */
     @RequestMapping(value = "/home/createcar" , method = RequestMethod.POST)
-    public String showCars(@ModelAttribute Car car, Model model) {
+    public String showCars(@ModelAttribute Car car, Model model, CarFilter filter,
+                           @RequestParam(defaultValue = "0") int page,
+                           @RequestParam(defaultValue = "5") int size) {
 
-        List<Car> cars = carService.getCars();
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Car> carsPage = carService.getCars(filter,pageable);
+        List<Car> cars = carsPage.getContent();
 
 
         if (car.getCarMark().equals("") || car.getCarRegistrationNumber().equals("") || car.getCarModel().equals("")) {

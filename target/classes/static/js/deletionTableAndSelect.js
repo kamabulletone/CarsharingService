@@ -17,8 +17,6 @@ $(function() {
             placeholder_text_multiple: 'Выберите клиента'
         });
 
-
-
             console.log($("#log").css("width"));
             $("#reg").css({
             'width': ($("#log").css("width") + 'px')
@@ -26,7 +24,6 @@ $(function() {
             $("#reg").css({
             'height': ($("#log").css("height") + 'px')
             });
-
 
          $("#car").change(function() {
              var cars = [];
@@ -41,11 +38,7 @@ $(function() {
                 container.removeChild(container.lastChild);
              }
 
-
-
              for (let i = 0; i < number.length; i++) {
-
-
                 if (cars.includes(number[i]["carId"].toString())) {
                      tableExist = true;
                      break;
@@ -59,7 +52,6 @@ $(function() {
                 var head = $("#head");
 
                 for (let i = 0; i < number.length; i++) {
-
                     if (cars.includes(number[i]["carId"].toString())) {
                         var str = "<tr>" + "<td>" + number[i]["carId"] + "</td>" +
                          "<td>" + number[i]["carMark"] + "</td>" +
@@ -67,15 +59,11 @@ $(function() {
                          "<td>" + number[i]["carRegistrationNumber"] + "</td>" +
                          "<td>" + number[i]["carStatus"] + "</td>"  + "</tr>"
                          cringe += str;
-
                     }
-
                 }
                 cringe += "</table>";
                 container.innerHTML += cringe;
              }
-
-
          });
 
          $("#client").change(function() {
@@ -87,32 +75,22 @@ $(function() {
 
              let container = document.getElementById("container2");
 
-
-
              while (container.hasChildNodes()) {
                  container.removeChild(container.lastChild);
              }
 
-
              for (let i = 0; i < number2.length; i++) {
-
-
                  if (clients.includes(number2[i]["clientID"].toString())) {
                      tableExist = true;
                      break;
                  }
-
              }
 
 
              if (tableExist) {
-
-
                  var cringe = "<table class='table table-bordered' > <tr> <td>Id</td> <td>Full name</td> <td>Passport</td> <td>phoneNumber</td> <td>email</td> </tr>";
 
-
                  for (let i = 0; i < number2.length; i++) {
-
                      if (clients.includes(number2[i]["clientID"].toString())) {
                          var str = "<tr>" + "<td>" + number2[i]["clientID"] + "</td>" +
                           "<td>" + number2[i]["fullName"] + "</td>" +
@@ -120,7 +98,6 @@ $(function() {
                           "<td>" + number2[i]["phoneNumber"] + "</td>" +
                           "<td>" + number2[i]["email"] + "</td>"  + "</tr>"
                           cringe += str;
-
                      }
 
                  }
@@ -128,8 +105,6 @@ $(function() {
                  container.innerHTML += cringe;
              }
 
-
          });
 
 });
-//});

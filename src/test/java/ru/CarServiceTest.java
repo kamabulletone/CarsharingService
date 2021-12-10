@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.Filters.CarFilter;
 import ru.model.Car;
 import ru.repositories.CarRepository;
 import ru.services.CarService;

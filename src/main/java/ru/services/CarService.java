@@ -1,14 +1,23 @@
 package ru.services;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.Filters.CarFilter;
 import ru.model.Car;
 import ru.repositories.CarRepository;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -36,9 +45,36 @@ public class CarService {
      * Метод получения списка всех машин
      * @return список машин
      */
+    public Page<Car> getCars(CarFilter filter, Pageable pageable) {
+        log.info("Find all items with filter");
+        return reps.findAll(byFilter(filter), pageable);
+    }
+
     public List<Car> getCars() {
-        log.info("Find all items");
+        log.info("Find all items with no filter");
         return reps.findAll();
+    }
+
+
+    private Specification<Car> byFilter(CarFilter filter) {
+        return new Specification<Car>() {
+            @Override
+            public Predicate toPredicate(Root<Car> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> predicates = new ArrayList<>();
+
+                if (filter.getCarMark() != null && !Objects.equals(filter.getCarMark(), "")) {
+                    predicates.add(criteriaBuilder.equal(
+                            root.get("carMark"), filter.getCarMark()
+                    ));
+                }
+                if (filter.getCarModel() != null && !Objects.equals(filter.getCarModel(), "")) {
+                    predicates.add(criteriaBuilder.equal(
+                            root.get("carModel"), filter.getCarModel()
+                    ));
+                }
+                return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+            }
+        };
     }
 
     /**
